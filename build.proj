@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="CreateReleasePackage" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="Templify" DependsOnTargets="Build">
+		<Message Text="---------------" />
+	    <Message Text="TEMPLIFY" />
+	    <Message Text="---------------" />
+	    
+	    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\Solution\Templify.NancyAspNetRazor.Web\obj\Release\Templify.NancyAspNetRazor.Web.dll">
+	      <Output TaskParameter="Assemblies" ItemName="assemblyInfo"/>
+	    </GetAssemblyIdentity>
+
+	    <PropertyGroup>
+	      <TemplifyMode>c</TemplifyMode>
+	      <TemplifyPath>"$(MSBuildProjectDirectory)\Solution"</TemplifyPath>
+	      <TemplifyPackageName>"Nancy Asp.net Razor"</TemplifyPackageName>
+	      <TemplifyPackageAuthor>"Brendan McMahon"</TemplifyPackageAuthor>
+	      <TemplifyPackageVersion>"%(assemblyInfo.Version)"</TemplifyPackageVersion>
+	      <TemplifyPackageTokens>"Templify.NancyAspNetRazor=__NAME__"</TemplifyPackageTokens>
+	      <TemplifyPackageRepositoryPath>"$(MSBuildProjectDirectory)"</TemplifyPackageRepositoryPath>
+	      <TemplifyArgs>-m $(TemplifyMode) -p $(TemplifyPath) -n $(TemplifyPackageName) -a $(TemplifyPackageAuthor) -v $(TemplifyPackageVersion) -t $(TemplifyPackageTokens) -r $(TemplifyPackageRepositoryPath)</TemplifyArgs>
+	    </PropertyGroup>
+	        
+	    <Exec Command="&quot;$(MSBuildProgramFiles32)\endjin\Templify\Framework\TemplifyCmd.exe&quot; $(TemplifyArgs)" ContinueOnError="false" />
+	</Target>
+
+	<Target Name="Build">
+		<MSBuild Projects="Solution\Templify.NancyAspNetRazor.sln" Properties="Configuration=Release"/>
+	</Target>
+</Project>
