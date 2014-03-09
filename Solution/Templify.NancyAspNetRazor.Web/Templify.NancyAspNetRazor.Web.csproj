@@ -124,16 +124,24 @@ xcopy /s /y /R "$(SolutionDir)packages\Nancy.Viewengines.Razor.0.22.2\lib\Net40\
     <Message Text="---------------" />
     <Message Text="TEMPLIFY" />
     <Message Text="---------------" />
+    
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="assemblyInfo"/>
+    </GetAssemblyIdentity>
+
     <PropertyGroup>
       <TemplifyMode>c</TemplifyMode>
       <TemplifyPath>"$(MSBuildProjectDirectory)\..\..\Templify.NancyAspNetRazor"</TemplifyPath>
       <TemplifyPackageName>"Nancy Asp.net Razor"</TemplifyPackageName>
       <TemplifyPackageAuthor>"Brendan McMahon"</TemplifyPackageAuthor>
-      <TemplifyPackageVersion>"1.0.0"</TemplifyPackageVersion>
+      <TemplifyPackageVersion>"%(assemblyInfo.Version)"</TemplifyPackageVersion>
       <TemplifyPackageTokens>"Templify.NancyAspNetRazor=__NAME__"</TemplifyPackageTokens>
-      <TemplifyPackageRepositoryPath>"$(MSBuildProjectDirectory)\..\..\Templify.NancyAspNetRazor"</TemplifyPackageRepositoryPath>
+      <TemplifyPackageRepositoryPath>"$(MSBuildProjectDirectory)\..\Deploy"</TemplifyPackageRepositoryPath>
       <TemplifyArgs>-m $(TemplifyMode) -p $(TemplifyPath) -n $(TemplifyPackageName) -a $(TemplifyPackageAuthor) -v $(TemplifyPackageVersion) -t $(TemplifyPackageTokens) -r $(TemplifyPackageRepositoryPath)</TemplifyArgs>
     </PropertyGroup>
+    
+    
     <Exec Command="&quot;$(ProgramFiles)\endjin\Templify\Framework\TemplifyCmd.exe&quot; $(TemplifyArgs)" ContinueOnError="false" />
   </Target>
+
 </Project>
