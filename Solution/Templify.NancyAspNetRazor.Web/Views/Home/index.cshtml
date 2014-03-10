@@ -1,4 +1,6 @@
-﻿@{
+﻿@inherits NancyRazorViewBase<System.Collections.Generic.IEnumerable<Templify.NancyAspNetRazor.Data.Models.User>>
+
+@{
     Layout = "_Layout.cshtml";
 }
 
@@ -14,3 +16,8 @@ This view was rendered using the Nancy Razor view engine
     Click me
     <span class="glyphicon glyphicon-adjust"></span>
 </a>
+
+@foreach (var u in Model)
+{
+    <div>@u.UserName</div>
+}
