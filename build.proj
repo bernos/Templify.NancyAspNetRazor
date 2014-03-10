@@ -16,7 +16,7 @@
 	      <TemplifyPackageAuthor>"Brendan McMahon"</TemplifyPackageAuthor>
 	      <TemplifyPackageVersion>"%(assemblyInfo.Version)"</TemplifyPackageVersion>
 	      <TemplifyPackageTokens>"Templify.NancyAspNetRazor=__NAME__"</TemplifyPackageTokens>
-	      <TemplifyPackageRepositoryPath>"$(MSBuildProjectDirectory)"</TemplifyPackageRepositoryPath>
+	      <TemplifyPackageRepositoryPath>"$(MSBuildProjectDirectory)\Deploy"</TemplifyPackageRepositoryPath>
 	      <TemplifyArgs>-m $(TemplifyMode) -p $(TemplifyPath) -n $(TemplifyPackageName) -a $(TemplifyPackageAuthor) -v $(TemplifyPackageVersion) -t $(TemplifyPackageTokens) -r $(TemplifyPackageRepositoryPath)</TemplifyArgs>
 	    </PropertyGroup>
 	        
