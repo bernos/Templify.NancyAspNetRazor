@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Nancy.ClientAppSettings
+@using Nancy.ClientAppSettings.Razor
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
@@ -8,11 +11,13 @@
         <title>Templify.NancyAspNetRazor</title>
         
         @RenderSection("Head", required: false)
+        
+        @Html.RenderClientAppSettings()
 
     </head>
 <body>
     @RenderBody()
-    
+    <script src="~/Scripts/require-config.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

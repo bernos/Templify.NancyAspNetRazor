@@ -2,5 +2,10 @@
     Layout = "_Layout.cshtml";
 }
 
+@section Scripts
+{
+    <script src="~/Scripts/require.js" data-main="@Url.Content("~/")scripts/index"></script>
+}
+
 <img src="~/Content/nancy-logo.png" alt="Nancy logo" /><br />
 This view was rendered using the Nancy Razor view engine

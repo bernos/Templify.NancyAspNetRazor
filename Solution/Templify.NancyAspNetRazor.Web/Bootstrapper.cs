@@ -1,4 +1,6 @@
-﻿using Nancy.Conventions;
+﻿using Nancy.Bootstrapper;
+using Nancy.ClientAppSettings;
+using Nancy.Conventions;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -14,6 +16,13 @@ namespace Templify.NancyAspNetRazor.Web
         // by overriding the various methods and properties.
         // For more information https://github.com/NancyFx/Nancy/wiki/Bootstrapper
 
+        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        {
+            base.ApplicationStartup(container, pipelines);
+
+            ClientAppSettings.Enable(pipelines);
+        }
+
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
@@ -27,20 +36,6 @@ namespace Templify.NancyAspNetRazor.Web
 
             // Add scripts folder as static file folder
             nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("scripts", "Scripts"));
-        }
-
-        /// <summary>
-        /// Create and configure our JsonSerializerConfiguration
-        /// </summary>
-        /// <param name="container"></param>
-        /// <param name="overloads"></param>
-        /// <returns></returns>
-        private static JsonSerializer CreateJsonSerializer(TinyIoCContainer container, NamedParameterOverloads overloads)
-        {
-            var serializer = new JsonSerializer();
-            serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-            return serializer;
         }
     }
 
