@@ -1,12 +1,11 @@
-﻿using System;
+using System;
+using Nancy;
 
-namespace Templify.NancyAspNetRazor.Web
+namespace Templify.NancyAspNetRazor.Web.Modules
 {
-    using Nancy;
-
-    public class IndexModule : NancyModule
+    public class HomeModule : NancyModule
     {
-        public IndexModule()
+        public HomeModule()
         {
             Get["/"] = parameters =>
             {

@@ -75,7 +75,7 @@
   <ItemGroup>
     <Content Include="Content\nancy-logo.png" />
     <Content Include="Scripts\config.js" />
-    <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\Modules\Home\index.js" />
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require-config.js" />
     <Content Include="Scripts\require.js" />
@@ -84,12 +84,12 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Config\JsonSerializerConfiguration.cs" />
-    <Compile Include="IndexModule.cs" />
+    <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Views\index.cshtml" />
+    <Content Include="Views\Home\index.cshtml" />
     <Content Include="Views\_Layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

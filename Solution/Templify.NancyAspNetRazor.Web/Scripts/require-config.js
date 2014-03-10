@@ -8,9 +8,9 @@
  */
 var require = {
     paths: {
-        "jquery": "jquery-2.1.0.min",
-        "knockout": "knockout-3.0.0",
-        "knockout.mapping": "knockout.mapping-latest",
-        "moment": "moment"
+    //    "jquery": "jquery-2.1.0.min",
+    //    "knockout": "knockout-3.0.0",
+    //    "knockout.mapping": "knockout.mapping-latest",
+    //    "moment": "moment"
     }
 };
