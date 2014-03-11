@@ -41,6 +41,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -59,11 +62,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Nancy.0.22.2\lib\net40\Nancy.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.ClientAppSettings">
+    <Reference Include="Nancy.ClientAppSettings, Version=0.0.2.25374, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Nancy.ClientAppSettings.0.0.2.25374\lib\net40\Nancy.ClientAppSettings.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.ClientAppSettings.Razor">
+    <Reference Include="Nancy.ClientAppSettings.Razor, Version=0.0.1.26232, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Nancy.ClientAppSettings.Razor.0.0.1.26232\lib\net40\Nancy.ClientAppSettings.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Elmah">
+      <HintPath>..\packages\Nancy.Elmah.0.1.7\lib\net40\Nancy.Elmah.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Hosting.Aspnet, Version=0.22.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -76,7 +84,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Nancy.Viewengines.Razor.0.22.2\lib\net40\Nancy.ViewEngines.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -86,15 +95,17 @@
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Razor.Unofficial">
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Razor.Unofficial, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Web.Razor.Unofficial.2.0.2\lib\net40\System.Web.Razor.Unofficial.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\css\styles.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\nancy-logo.png" />
@@ -156,7 +167,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Config\ErrorHandlingConfiguration.cs" />
     <Compile Include="Config\JsonSerializerConfiguration.cs" />
+    <Compile Include="ErrorStatusCodeHandler.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -165,6 +178,7 @@
     <Content Include="Views\Home\index.cshtml" />
     <Content Include="Views\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

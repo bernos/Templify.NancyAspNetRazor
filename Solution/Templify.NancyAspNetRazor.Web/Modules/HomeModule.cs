@@ -16,6 +16,11 @@ namespace Templify.NancyAspNetRazor.Web.Modules
                 return View["index", users];
             };
 
+            Get["/error"] = parameters =>
+            {
+                throw new Exception("This is an example error.");
+            };
+
             Get["/api"] = parameters =>
             {
                 return Response.AsJson(new

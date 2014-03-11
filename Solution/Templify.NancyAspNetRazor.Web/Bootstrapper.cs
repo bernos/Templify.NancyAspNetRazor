@@ -1,6 +1,8 @@
 ﻿using Nancy.Bootstrapper;
 using Nancy.ClientAppSettings;
 using Nancy.Conventions;
+using Nancy.Elmah;
+using Nancy.Responses;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -21,6 +23,8 @@ namespace Templify.NancyAspNetRazor.Web
             base.ApplicationStartup(container, pipelines);
 
             ClientAppSettings.Enable(pipelines);
+            Elmahlogging.Enable(pipelines, "elmah");
+            ErrorHandlingConfiguration.Enable(pipelines, container.Resolve<ISerializer>());
         }
 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
@@ -37,6 +41,8 @@ namespace Templify.NancyAspNetRazor.Web
             // Add scripts folder as static file folder
             nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("scripts", "Scripts"));
         }
+
+        
     }
 
 
