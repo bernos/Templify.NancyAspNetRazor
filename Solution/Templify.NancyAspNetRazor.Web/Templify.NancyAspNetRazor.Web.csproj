@@ -167,9 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Config\ErrorHandlingConfiguration.cs" />
     <Compile Include="Config\JsonSerializerConfiguration.cs" />
-    <Compile Include="ErrorStatusCodeHandler.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -179,6 +177,7 @@
     <Content Include="Views\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Error.cshtml" />
+    <Content Include="Views\NotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -187,6 +186,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Nancy.CustomErrors\Nancy.CustomErrors.csproj">
+      <Project>{4d0f6ed6-9888-4845-b7ee-e16f81712ee5}</Project>
+      <Name>Nancy.CustomErrors</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Templify.NancyAspNetRazor.Data\Templify.NancyAspNetRazor.Data.csproj">
       <Project>{0b2f2115-f1b0-4221-b901-f98be55ad781}</Project>
       <Name>Templify.NancyAspNetRazor.Data</Name>

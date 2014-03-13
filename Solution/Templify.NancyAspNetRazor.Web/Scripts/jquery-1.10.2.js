@@ -129,7 +129,7 @@ jQuery.fn = jQuery.prototype = {
 			return this;
 		}
 
-		// Handle HTML strings
+		// Render HTML strings
 		if ( typeof selector === "string" ) {
 			if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
 				// Assume that strings that start and end with <> are HTML and skip the regex check
@@ -176,7 +176,7 @@ jQuery.fn = jQuery.prototype = {
 					// Check parentNode to catch when Blackberry 4.6 returns
 					// nodes that are no longer in the document #6963
 					if ( elem && elem.parentNode ) {
-						// Handle the case where IE and Opera return items
+						// Render the case where IE and Opera return items
 						// by name instead of ID
 						if ( elem.id !== match[2] ) {
 							return rootjQuery.find( selector );
@@ -318,7 +318,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 		length = arguments.length,
 		deep = false;
 
-	// Handle a deep copy situation
+	// Render a deep copy situation
 	if ( typeof target === "boolean" ) {
 		deep = target;
 		target = arguments[1] || {};
@@ -326,7 +326,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 		i = 2;
 	}
 
-	// Handle case when target is a string or something (possible in deep copy)
+	// Render case when target is a string or something (possible in deep copy)
 	if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
 		target = {};
 	}
@@ -408,7 +408,7 @@ jQuery.extend({
 		}
 	},
 
-	// Handle when the DOM is ready
+	// Render when the DOM is ready
 	ready: function( wait ) {
 
 		// Abort if there are pending holds or we're already ready
@@ -490,7 +490,7 @@ jQuery.extend({
 		}
 
 		// Support: IE<9
-		// Handle iteration over inherited properties before own properties.
+		// Render iteration over inherited properties before own properties.
 		if ( jQuery.support.ownLast ) {
 			for ( key in obj ) {
 				return core_hasOwn.call( obj, key );
@@ -923,7 +923,7 @@ jQuery.ready.promise = function( obj ) {
 		// we once tried to use readyState "interactive" here, but it caused issues like the one
 		// discovered by ChrisS here: http://bugs.jquery.com/ticket/12282#comment:15
 		if ( document.readyState === "complete" ) {
-			// Handle it asynchronously to allow scripts the opportunity to delay ready
+			// Render it asynchronously to allow scripts the opportunity to delay ready
 			setTimeout( jQuery.ready );
 
 		// Standards-based browsers support DOMContentLoaded
@@ -1211,7 +1211,7 @@ function Sizzle( selector, context, results, seed ) {
 					// Check parentNode to catch when Blackberry 4.6 returns
 					// nodes that are no longer in the document #6963
 					if ( elem && elem.parentNode ) {
-						// Handle the case where IE, Opera, and Webkit return items
+						// Render the case where IE, Opera, and Webkit return items
 						// by name instead of ID
 						if ( elem.id === m ) {
 							results.push( elem );
@@ -3103,7 +3103,7 @@ jQuery.Callbacks = function( options ) {
 						var index;
 						while( ( index = jQuery.inArray( arg, list, index ) ) > -1 ) {
 							list.splice( index, 1 );
-							// Handle firing indexes
+							// Render firing indexes
 							if ( firing ) {
 								if ( index <= firingLength ) {
 									firingLength--;
@@ -3234,7 +3234,7 @@ jQuery.extend({
 			// promise[ done | fail | progress ] = list.add
 			promise[ tuple[1] ] = list.add;
 
-			// Handle state
+			// Render state
 			if ( stateString ) {
 				list.add(function() {
 					// state = [ resolved | rejected ]
@@ -4770,7 +4770,7 @@ jQuery.event = {
 			eventHandle.elem = elem;
 		}
 
-		// Handle multiple events separated by a space
+		// Render multiple events separated by a space
 		types = ( types || "" ).match( core_rnotwhite ) || [""];
 		t = types.length;
 		while ( t-- ) {
@@ -7555,7 +7555,7 @@ jQuery.each( ("blur focus focusin focusout load resize scroll unload click dblcl
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup error contextmenu").split(" "), function( i, name ) {
 
-	// Handle event binding
+	// Render event binding
 	jQuery.fn[ name ] = function( data, fn ) {
 		return arguments.length > 0 ?
 			this.on( name, null, data, fn ) :
@@ -7996,7 +7996,7 @@ jQuery.extend({
 
 		// Remove hash character (#7531: and string promotion)
 		// Add protocol if not provided (#5866: IE7 issue with protocol-less urls)
-		// Handle falsy url in the settings object (#10093: consistency with old signature)
+		// Render falsy url in the settings object (#10093: consistency with old signature)
 		// We also use the url parameter if available
 		s.url = ( ( url || s.url || ajaxLocation ) + "" ).replace( rhash, "" ).replace( rprotocol, ajaxLocParts[ 1 ] + "//" );
 
@@ -8251,7 +8251,7 @@ jQuery.extend({
 
 			if ( fireGlobals ) {
 				globalEventContext.trigger( "ajaxComplete", [ jqXHR, s ] );
-				// Handle the global AJAX counter
+				// Render the global AJAX counter
 				if ( !( --jQuery.active ) ) {
 					jQuery.event.trigger("ajaxStop");
 				}
@@ -8454,7 +8454,7 @@ jQuery.ajaxSetup({
 	}
 });
 
-// Handle cache's special case and global
+// Render cache's special case and global
 jQuery.ajaxPrefilter( "script", function( s ) {
 	if ( s.cache === undefined ) {
 		s.cache = false;
@@ -8493,7 +8493,7 @@ jQuery.ajaxTransport( "script", function(s) {
 
 					if ( isAbort || !script.readyState || /loaded|complete/.test( script.readyState ) ) {
 
-						// Handle memory leak in IE
+						// Render memory leak in IE
 						script.onload = script.onreadystatechange = null;
 
 						// Remove the script
@@ -8546,7 +8546,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			typeof s.data === "string" && !( s.contentType || "" ).indexOf("application/x-www-form-urlencoded") && rjsonp.test( s.data ) && "data"
 		);
 
-	// Handle iff the expected data type is "jsonp" or we have a parameter to set
+	// Render iff the expected data type is "jsonp" or we have a parameter to set
 	if ( jsonProp || s.dataTypes[ 0 ] === "jsonp" ) {
 
 		// Get callback name, remembering preexisting value associated with it

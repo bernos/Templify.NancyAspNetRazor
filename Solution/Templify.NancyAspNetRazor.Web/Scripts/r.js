@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license r.js 2.1.11 Copyright (c) 2010-2014, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/requirejs for details
@@ -25586,7 +25586,7 @@ define('commonJs', ['env!env/file', 'parse'], function (file, parse) {
                     fileName = fileList[i];
                     convertedFileName = fileName.replace(commonJsPath, savePath);
 
-                    //Handle JS files.
+                    //Render JS files.
                     if (jsFileRegExp.test(fileName)) {
                         fileContents = file.readFile(fileName);
                         fileContents = commonJs.convert(fileName, fileContents);

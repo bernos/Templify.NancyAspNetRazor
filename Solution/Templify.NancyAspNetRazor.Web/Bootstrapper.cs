@@ -1,9 +1,11 @@
 ﻿using Nancy.Bootstrapper;
 using Nancy.ClientAppSettings;
 using Nancy.Conventions;
+using Nancy.CustomErrors;
 using Nancy.Elmah;
 using Nancy.Responses;
 using Nancy.TinyIoc;
+using Nancy.ViewEngines;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Templify.NancyAspNetRazor.Web.Config;
@@ -24,13 +26,13 @@ namespace Templify.NancyAspNetRazor.Web
 
             ClientAppSettings.Enable(pipelines);
             Elmahlogging.Enable(pipelines, "elmah");
-            ErrorHandlingConfiguration.Enable(pipelines, container.Resolve<ISerializer>());
+            CustomErrors.Enable(pipelines);
         }
 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-
+            container.Register(typeof (ErrorPageRenderer), typeof (CustomErrorPageRenderer));
             JsonSerializerConfiguration.ConfigureApplicationContainer(container);
         }
 
@@ -43,6 +45,14 @@ namespace Templify.NancyAspNetRazor.Web
         }
 
         
+    }
+
+    public class CustomErrorPageRenderer : ErrorPageRenderer
+    {
+        public CustomErrorPageRenderer()
+        {
+            NotFoundView = "NotFound";
+        }
     }
 
 

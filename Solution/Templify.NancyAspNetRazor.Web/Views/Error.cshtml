@@ -1,1 +1,4 @@
-﻿<h1>Error</h1>
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+<h1>@Model.Title</h1>
+<p>@Model.Summary</p>
