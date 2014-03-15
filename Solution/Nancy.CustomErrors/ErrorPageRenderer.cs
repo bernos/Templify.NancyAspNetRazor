@@ -14,6 +14,7 @@ namespace Nancy.CustomErrors
         public virtual void Render(NancyContext context, HttpStatusCode statusCode, IViewRenderer viewRenderer)
         {
             var error = context.Response as ErrorResponse;
+
             switch (statusCode)
             {
                 case HttpStatusCode.Unauthorized:
@@ -30,7 +31,7 @@ namespace Nancy.CustomErrors
                         context.Response = viewRenderer.RenderView(context, ErrorView, new
                         {
                             Title = "Unauthorized",
-                            Summary = error == null ? "You do not have permission to do that." : error.Error.Summary
+                            Summary = error == null ? "You do not have permission to do that." : error.ErrorMessage
                         }).WithStatusCode(statusCode);
                     }
                     break;
@@ -38,7 +39,7 @@ namespace Nancy.CustomErrors
                     context.Response = viewRenderer.RenderView(context, ErrorView, new
                     {
                         Title = "Forbidden",
-                        Summary = error == null ? "You do not have permission to do that." : error.Error.Summary
+                        Summary = error == null ? "You do not have permission to do that." : error.ErrorMessage
                     }).WithStatusCode(statusCode);
                     break;
                 case HttpStatusCode.NotFound:
@@ -52,8 +53,8 @@ namespace Nancy.CustomErrors
                     context.Response = viewRenderer.RenderView(context, ErrorView, new
                     {
                         Title = "Sorry, something went wrong",
-                        Summary = error == null ? "An unexpected error occurred." : error.Error.Summary,
-                        Details = error == null ? null : error.Error.StackTrace
+                        Summary = error == null ? "An unexpected error occurred." : error.ErrorMessage,
+                        Details = error == null ? null : error.FullException
                     }).WithStatusCode(statusCode); ;
                     break;
             }

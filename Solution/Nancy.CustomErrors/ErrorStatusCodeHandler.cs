@@ -44,7 +44,7 @@ namespace Nancy.CustomErrors
                     // When this happens we still want to return our nice JSON response.
                     context.Response = new ErrorResponse(new Error
                     {
-                        Summary = "The requested resource could not be found",
+                        Message = "The requested resource could not be found",
                         StatusCode = statusCode
                     });
                 }
