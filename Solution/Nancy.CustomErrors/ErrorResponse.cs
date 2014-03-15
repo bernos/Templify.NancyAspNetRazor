@@ -1,6 +1,4 @@
-﻿using System;
-using Nancy.Responses;
-using Nancy.Serialization.JsonNet;
+﻿using Nancy.Responses;
 
 namespace Nancy.CustomErrors
 {
@@ -9,10 +7,9 @@ namespace Nancy.CustomErrors
         private readonly Error _error;
         public string ErrorMessage { get { return _error.Message; } }
         public string FullException { get { return _error.FullException; } }
-        public ErrorResponse(Error error) : this(error, new JsonNetSerializer()) { }
+        public ErrorResponse(Error error) : this(error, new DefaultJsonSerializer()) { }
         public ErrorResponse(Error error, ISerializer serializer) : base(error, serializer)
         {
-            StatusCode = error.StatusCode;
             _error = error;
         }
     }

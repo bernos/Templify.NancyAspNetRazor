@@ -1,7 +1,6 @@
 ﻿using System;
 using Nancy.Bootstrapper;
 using Nancy.Responses;
-using Nancy.Serialization.JsonNet;
 
 namespace Nancy.CustomErrors
 {
@@ -9,7 +8,7 @@ namespace Nancy.CustomErrors
     {
         public static CustomErrors Enable(IPipelines pipelines)
         {
-            return Enable(pipelines, new JsonNetSerializer());
+            return Enable(pipelines, new DefaultJsonSerializer());
         }
 
         public static CustomErrors Enable(IPipelines pipelines, ISerializer serializer)
@@ -28,23 +27,27 @@ namespace Nancy.CustomErrors
 
         private readonly ISerializer _serializer;
 
-        private Func<Exception, Error> _exceptionParser = e => new Error
-        {
-            FullException = e.ToString(),
-            Message = e.Message,
-            StatusCode = HttpStatusCode.InternalServerError
-        };
-        
+        private Func<NancyContext, Exception, ISerializer, ErrorResponse> _responseBuilder =
+            (context, e, serializer) =>
+            {
+                var error = new Error
+                {
+                    FullException = e.ToString(),
+                    Message = e.Message
+                };
 
-        public CustomErrors WithExceptionParser(Func<Exception, Error> exceptionParser)
+                return new ErrorResponse(error, serializer).WithStatusCode(HttpStatusCode.InternalServerError) as ErrorResponse;
+            };
+
+        public CustomErrors WithResponseBuilder(Func<NancyContext, Exception, ISerializer, ErrorResponse> responseBuilder)
         {
-            _exceptionParser = exceptionParser;
+            _responseBuilder = responseBuilder;
             return this;
         }
 
         private Response HandleError(NancyContext context, Exception e)
         {
-            return new ErrorResponse(_exceptionParser(e), _serializer);
+            return _responseBuilder(context, e, _serializer);
         }
     }
 }

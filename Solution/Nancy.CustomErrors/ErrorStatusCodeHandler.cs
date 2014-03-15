@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using Nancy.ErrorHandling;
 using Nancy.Responses;
 using Nancy.Responses.Negotiation;
@@ -34,7 +35,7 @@ namespace Nancy.CustomErrors
         public void Handle(HttpStatusCode statusCode, NancyContext context)
         {
             var clientWantsHtml = ShouldRenderFriendlyErrorPage(context);
-
+            
             if (!clientWantsHtml)
             {
                 if (context.Response is NotFoundResponse)
@@ -44,9 +45,8 @@ namespace Nancy.CustomErrors
                     // When this happens we still want to return our nice JSON response.
                     context.Response = new ErrorResponse(new Error
                     {
-                        Message = "The requested resource could not be found",
-                        StatusCode = statusCode
-                    });
+                        Message = "The requested resource could not be found"
+                    }, _serializer).WithStatusCode(statusCode);
                 }
 
                 // Pass the existing response through
