@@ -19,6 +19,16 @@ namespace Nancy.CustomErrors
             }
         }
 
+        public static CustomErrors Enable(IPipelines pipelines)
+        {
+            return Enable(pipelines, new DefaultErrorConfiguration());
+        }
+
+        public static CustomErrors Enable(IPipelines pipelines, ISerializer serializer)
+        {
+            return Enable(pipelines, new DefaultErrorConfiguration(), serializer);
+        }
+
         public static CustomErrors Enable(IPipelines pipelines, IErrorConfiguration configuration)
         {
             return Enable(pipelines, configuration, new DefaultJsonSerializer());
