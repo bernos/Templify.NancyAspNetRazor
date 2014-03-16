@@ -43,11 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomErrorConfiguration.cs" />
+    <Compile Include="DefaultErrorConfiguration.cs" />
     <Compile Include="CustomErrors.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="ErrorResponse.cs" />
     <Compile Include="ErrorStatusCodeHandler.cs" />
+    <Compile Include="IErrorConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

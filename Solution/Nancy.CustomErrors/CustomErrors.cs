@@ -6,26 +6,25 @@ namespace Nancy.CustomErrors
 {
     public class CustomErrors
     {
-        private static CustomErrorConfiguration _configuration;
-
-        public static CustomErrorConfiguration Configuration
+        private static IErrorConfiguration _configuration;
+        public static IErrorConfiguration Configuration
         {
             get
             {
                 if (_configuration == null)
                 {
-                    _configuration = new CustomErrorConfiguration();
+                    _configuration = new DefaultErrorConfiguration();
                 }
                 return _configuration;
             }
         }
 
-        public static CustomErrors Enable(IPipelines pipelines, CustomErrorConfiguration configuration)
+        public static CustomErrors Enable(IPipelines pipelines, IErrorConfiguration configuration)
         {
             return Enable(pipelines, configuration, new DefaultJsonSerializer());
         }
 
-        public static CustomErrors Enable(IPipelines pipelines, CustomErrorConfiguration configuration, ISerializer serializer)
+        public static CustomErrors Enable(IPipelines pipelines, IErrorConfiguration configuration, ISerializer serializer)
         {
             _configuration = configuration;
             var customErrors = new CustomErrors(serializer);
@@ -44,7 +43,7 @@ namespace Nancy.CustomErrors
 
         private Response HandleError(NancyContext context, Exception e)
         {
-            return Configuration.ResponseBuilder(context, e, _serializer);
+            return Configuration.HandleError(context, e, _serializer);
         }
     }
 }

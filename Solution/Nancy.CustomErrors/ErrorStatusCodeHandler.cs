@@ -56,24 +56,24 @@ namespace Nancy.CustomErrors
             switch (statusCode)
             {
                 case HttpStatusCode.Unauthorized:
-                    context.Response = new RedirectResponse(CustomErrors.Configuration.AuthorizationUrl(context));
+                    context.Response = new RedirectResponse(CustomErrors.Configuration.GetAuthorizationUrl(context));
                     break;
                 case HttpStatusCode.Forbidden:
-                    context.Response = RenderView(context, CustomErrors.Configuration.ErrorView, new
+                    context.Response = RenderView(context, CustomErrors.Configuration.ErrorViews[HttpStatusCode.Forbidden], new
                     {
                         Title = "Forbidden",
                         Summary = error == null ? "You do not have permission to do that." : error.ErrorMessage
                     }).WithStatusCode(statusCode);
                     break;
                 case HttpStatusCode.NotFound:
-                    context.Response = RenderView(context, CustomErrors.Configuration.NotFoundView, new
+                    context.Response = RenderView(context, CustomErrors.Configuration.ErrorViews[HttpStatusCode.NotFound], new
                     {
                         Title = "404 Not Found",
                         Summary = "Sorry, the resource you requested was not found."
                     }).WithStatusCode(statusCode); ;
                     break;
                 case HttpStatusCode.InternalServerError:
-                    context.Response = RenderView(context, CustomErrors.Configuration.ErrorView, new
+                    context.Response = RenderView(context, CustomErrors.Configuration.ErrorViews[HttpStatusCode.InternalServerError], new
                     {
                         Title = "Sorry, something went wrong",
                         Summary = error == null ? "An unexpected error occurred." : error.ErrorMessage,
