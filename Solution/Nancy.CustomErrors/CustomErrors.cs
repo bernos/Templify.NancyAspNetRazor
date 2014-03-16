@@ -6,13 +6,28 @@ namespace Nancy.CustomErrors
 {
     public class CustomErrors
     {
-        public static CustomErrors Enable(IPipelines pipelines)
+        private static CustomErrorConfiguration _configuration;
+
+        public static CustomErrorConfiguration Configuration
         {
-            return Enable(pipelines, new DefaultJsonSerializer());
+            get
+            {
+                if (_configuration == null)
+                {
+                    _configuration = new CustomErrorConfiguration();
+                }
+                return _configuration;
+            }
         }
 
-        public static CustomErrors Enable(IPipelines pipelines, ISerializer serializer)
+        public static CustomErrors Enable(IPipelines pipelines, CustomErrorConfiguration configuration)
         {
+            return Enable(pipelines, configuration, new DefaultJsonSerializer());
+        }
+
+        public static CustomErrors Enable(IPipelines pipelines, CustomErrorConfiguration configuration, ISerializer serializer)
+        {
+            _configuration = configuration;
             var customErrors = new CustomErrors(serializer);
 
             pipelines.OnError.AddItemToEndOfPipeline(customErrors.HandleError);
@@ -27,27 +42,9 @@ namespace Nancy.CustomErrors
 
         private readonly ISerializer _serializer;
 
-        private Func<NancyContext, Exception, ISerializer, ErrorResponse> _responseBuilder =
-            (context, e, serializer) =>
-            {
-                var error = new Error
-                {
-                    FullException = e.ToString(),
-                    Message = e.Message
-                };
-
-                return new ErrorResponse(error, serializer).WithStatusCode(HttpStatusCode.InternalServerError) as ErrorResponse;
-            };
-
-        public CustomErrors WithResponseBuilder(Func<NancyContext, Exception, ISerializer, ErrorResponse> responseBuilder)
-        {
-            _responseBuilder = responseBuilder;
-            return this;
-        }
-
         private Response HandleError(NancyContext context, Exception e)
         {
-            return _responseBuilder(context, e, _serializer);
+            return Configuration.ResponseBuilder(context, e, _serializer);
         }
     }
 }

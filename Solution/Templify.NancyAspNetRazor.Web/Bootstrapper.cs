@@ -26,13 +26,13 @@ namespace Templify.NancyAspNetRazor.Web
 
             ClientAppSettings.Enable(pipelines);
             Elmahlogging.Enable(pipelines, "elmah");
-            CustomErrors.Enable(pipelines);
+            CustomErrors.Enable(pipelines, container.Resolve<CustomErrorConfiguration>());
         }
 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             base.ConfigureApplicationContainer(container);
-            container.Register(typeof (ErrorPageRenderer), typeof (CustomErrorPageRenderer));
+            
             JsonSerializerConfiguration.ConfigureApplicationContainer(container);
         }
 
@@ -45,14 +45,6 @@ namespace Templify.NancyAspNetRazor.Web
         }
 
         
-    }
-
-    public class CustomErrorPageRenderer : ErrorPageRenderer
-    {
-        public CustomErrorPageRenderer()
-        {
-            NotFoundView = "NotFound";
-        }
     }
 
 

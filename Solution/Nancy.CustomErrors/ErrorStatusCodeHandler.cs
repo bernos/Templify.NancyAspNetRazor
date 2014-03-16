@@ -10,18 +10,16 @@ namespace Nancy.CustomErrors
     public class ErrorStatusCodeHandler : DefaultViewRenderer, IStatusCodeHandler
     {
         private readonly ISerializer _serializer;
-        private readonly ErrorPageRenderer _renderer;
 
-        public ErrorStatusCodeHandler(IViewFactory viewFactory, ErrorPageRenderer renderer)
-            : this(viewFactory, new DefaultJsonSerializer(), renderer)
+        public ErrorStatusCodeHandler(IViewFactory viewFactory)
+            : this(viewFactory, new DefaultJsonSerializer())
         {
         }
 
-        public ErrorStatusCodeHandler(IViewFactory viewFactory, ISerializer serializer, ErrorPageRenderer renderer)
+        public ErrorStatusCodeHandler(IViewFactory viewFactory, ISerializer serializer)
             : base(viewFactory)
         {
             _serializer = serializer;
-            _renderer = renderer;
         }
 
         public bool HandlesStatusCode(HttpStatusCode statusCode, NancyContext context)
@@ -52,8 +50,38 @@ namespace Nancy.CustomErrors
                 // Pass the existing response through
                 return;
             }
+            
+            var error = context.Response as ErrorResponse;
 
-            _renderer.Render(context, statusCode, this);
+            switch (statusCode)
+            {
+                case HttpStatusCode.Unauthorized:
+                    context.Response = new RedirectResponse(CustomErrors.Configuration.AuthorizationUrl(context));
+                    break;
+                case HttpStatusCode.Forbidden:
+                    context.Response = RenderView(context, CustomErrors.Configuration.ErrorView, new
+                    {
+                        Title = "Forbidden",
+                        Summary = error == null ? "You do not have permission to do that." : error.ErrorMessage
+                    }).WithStatusCode(statusCode);
+                    break;
+                case HttpStatusCode.NotFound:
+                    context.Response = RenderView(context, CustomErrors.Configuration.NotFoundView, new
+                    {
+                        Title = "404 Not Found",
+                        Summary = "Sorry, the resource you requested was not found."
+                    }).WithStatusCode(statusCode); ;
+                    break;
+                case HttpStatusCode.InternalServerError:
+                    context.Response = RenderView(context, CustomErrors.Configuration.ErrorView, new
+                    {
+                        Title = "Sorry, something went wrong",
+                        Summary = error == null ? "An unexpected error occurred." : error.ErrorMessage,
+                        Details = error == null ? null : error.FullException
+                    }).WithStatusCode(statusCode); ;
+                    break;
+            }
+
         }
 
         private static bool ShouldRenderFriendlyErrorPage(NancyContext context)

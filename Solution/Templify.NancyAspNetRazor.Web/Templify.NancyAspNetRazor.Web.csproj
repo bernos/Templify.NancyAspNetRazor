@@ -161,7 +161,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\Modules\Home\index.js" />
     <Content Include="Scripts\r.js" />
-    <Content Include="Scripts\require-config.js" />
     <Content Include="Scripts\require.js" />
     <Content Include="Web.config" />
   </ItemGroup>
