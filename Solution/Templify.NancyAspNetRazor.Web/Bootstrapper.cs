@@ -26,7 +26,9 @@ namespace Templify.NancyAspNetRazor.Web
 
             ClientAppSettings.Enable(pipelines);
             Elmahlogging.Enable(pipelines, "elmah");
-            CustomErrors.Enable(pipelines, container.Resolve<IErrorConfiguration>());
+            //CustomErrors.Enable(pipelines, new CustomErrorConfiguration());
+
+            CustomErrors.Enable(pipelines);
         }
 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
@@ -34,7 +36,6 @@ namespace Templify.NancyAspNetRazor.Web
             base.ConfigureApplicationContainer(container);
             
             JsonSerializerConfiguration.ConfigureApplicationContainer(container);
-            ErrorHandlingConfiguration.ConfigureApplicationContainer(container);
         }
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)
@@ -43,10 +44,6 @@ namespace Templify.NancyAspNetRazor.Web
 
             // Add scripts folder as static file folder
             nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("scripts", "Scripts"));
-        }
-
-        
+        }        
     }
-
-
 }

@@ -21,6 +21,16 @@ namespace Templify.NancyAspNetRazor.Web.Modules
                 throw new Exception("This is an example error.");
             };
 
+            Get["/forbidden"] = parameters =>
+            {
+                return HttpStatusCode.Forbidden;
+            };
+
+            Get["/private"] = parameters =>
+            {
+                return HttpStatusCode.Unauthorized;
+            };
+
             Get["/api"] = parameters =>
             {
                 return Response.AsJson(new

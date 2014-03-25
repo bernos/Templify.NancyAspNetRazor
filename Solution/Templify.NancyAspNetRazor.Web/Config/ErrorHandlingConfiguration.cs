@@ -8,15 +8,7 @@ using Nancy.TinyIoc;
 
 namespace Templify.NancyAspNetRazor.Web.Config
 {
-    public static class ErrorHandlingConfiguration
-    {
-        public static void ConfigureApplicationContainer(TinyIoCContainer container)
-        {
-            container.Register<IErrorConfiguration, CustomErrorConfiguration>().AsSingleton();
-        }
-    }
-
-    public class CustomErrorConfiguration : DefaultErrorConfiguration
+    public class CustomErrorConfiguration : CustomErrorsConfiguration
     {
         public CustomErrorConfiguration() : base()
         {
