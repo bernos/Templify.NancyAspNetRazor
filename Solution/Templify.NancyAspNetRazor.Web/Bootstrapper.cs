@@ -36,6 +36,7 @@ namespace Templify.NancyAspNetRazor.Web
             base.ConfigureApplicationContainer(container);
             
             JsonSerializerConfiguration.ConfigureApplicationContainer(container);
+            LoggingConfiguration.ConfigureApplicationContainer(container);
         }
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)

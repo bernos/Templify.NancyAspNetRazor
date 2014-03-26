@@ -2,16 +2,23 @@ using System;
 using System.Linq;
 using Nancy;
 using Templify.NancyAspNetRazor.Data;
+using log4net;
 
 namespace Templify.NancyAspNetRazor.Web.Modules
 {
     public class HomeModule : NancyModule
     {
-        public HomeModule(Func<DataContext> dbFactory)
+        public HomeModule(Func<DataContext> dbFactory, Func<Type, ILog> logger)
         {
+            var log = logger(typeof(HomeModule));
+
             Get["/"] = parameters =>
             {
                 var users = dbFactory().Users.ToList();
+
+                log.Info("adfasdasdf");
+
+                log.Info("Hello world");
 
                 return View["index", users];
             };
