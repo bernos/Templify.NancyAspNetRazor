@@ -8,9 +8,9 @@ using Nancy.TinyIoc;
 
 namespace Templify.NancyAspNetRazor.Web.Config
 {
-    public class CustomErrorConfiguration : CustomErrorsConfiguration
+    public class ErrorHandlingConfiguration : CustomErrorsConfiguration
     {
-        public CustomErrorConfiguration() : base()
+        public ErrorHandlingConfiguration() : base()
         {
             ErrorViews[HttpStatusCode.NotFound] = "NotFound";
             ErrorViews[HttpStatusCode.InternalServerError] = "Error";

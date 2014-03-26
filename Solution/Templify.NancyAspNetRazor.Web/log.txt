@@ -12,3 +12,6 @@
 2014-03-26 12:48:36,435 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
 2014-03-26 12:48:54,461 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule adfasdasdf
 2014-03-26 12:48:54,469 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-03-26 13:40:58,284 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule adfasdasdf
+2014-03-26 13:40:58,293 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-03-26 13:48:37,765 [8] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world

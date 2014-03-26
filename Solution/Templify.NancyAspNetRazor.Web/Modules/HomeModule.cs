@@ -16,8 +16,6 @@ namespace Templify.NancyAspNetRazor.Web.Modules
             {
                 var users = dbFactory().Users.ToList();
 
-                log.Info("adfasdasdf");
-
                 log.Info("Hello world");
 
                 return View["index", users];
