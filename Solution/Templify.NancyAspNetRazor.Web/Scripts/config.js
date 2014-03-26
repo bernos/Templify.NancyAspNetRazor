@@ -1,5 +1,5 @@
 ﻿requirejs.config({
-    baseUrl: "Scripts",
+    //baseUrl: "Scripts",
     paths: {
         "jquery": "jquery-1.10.2.min",
         //    "knockout": "knockout-3.0.0",
