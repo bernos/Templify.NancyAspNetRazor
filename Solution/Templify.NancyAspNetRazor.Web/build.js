@@ -1,5 +1,19 @@
 ﻿({
-    mainConfigFile: "Scripts/config.js",
-    name: "Modules/home/index",
-    out: "Scripts/Modules/Home/index-built.js"
+    mainConfigFile: "Scripts/common.js",
+    baseUrl: "./Scripts",
+    findNestedDependencies:true,
+    modules: [
+        {
+            name: "common"
+        },
+        {
+            name: "Modules/Home/index",
+            exclude: ["common"]
+        }
+    ],
+
+    dir: "Scripts-built",
+    removeCombined: true,
+
+    skipDirOptimize: true
 })
