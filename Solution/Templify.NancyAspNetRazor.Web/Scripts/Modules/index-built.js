@@ -1,1 +1,0 @@
-requirejs.config({paths:{jquery:"jquery-1.10.2.min"}}),define("config",[],function(){return{appSettings:Settings}}),require(["../../config"],function(e){require(["jquery"],function(t){console.log("index.js loaded ",e),console.log(t("body"))})}),define("Modules/home/index",function(){});
