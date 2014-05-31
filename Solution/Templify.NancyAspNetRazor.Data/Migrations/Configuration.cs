@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Templify.NancyAspNetRazor.Data.Models;
 
 namespace Templify.NancyAspNetRazor.Data.Migrations
@@ -28,11 +29,22 @@ namespace Templify.NancyAspNetRazor.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            var adminRole = new Role
+            {
+                Name = "Administrator"
+            };
+
+            context.Roles.AddOrUpdate(r => r.Name, adminRole);
+
+            context.SaveChanges();
 
             context.Users.AddOrUpdate(u => u.UserName, new User
             {
-                UserName = "admin"
+                UserName = "admin",
+                Roles = new Collection<Role> { adminRole }
             });
+
+            context.SaveChanges();
         }
     }
 }

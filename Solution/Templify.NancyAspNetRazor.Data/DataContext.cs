@@ -9,6 +9,14 @@ namespace Templify.NancyAspNetRazor.Data
 {
     public class DataContext : DbContext
     {
-        public IDbSet<User> Users { get; set; } 
+        public IDbSet<User> Users { get; set; }
+        public IDbSet<Role> Roles { get; set; } 
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Configurations.AddFromAssembly(typeof (DataContext).Assembly);
+        }
     }
 }
