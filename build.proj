@@ -4,9 +4,22 @@
 		<SourceFolder>$(MSBuildProjectDirectory)\Solution</SourceFolder>
 		<BuildFolder>$(MSBuildProjectDirectory)\_build</BuildFolder>
 		<DestinationFolder>$(MSBuildProjectDirectory)\Deploy</DestinationFolder>
+
+		<Author>Brendan McMahon</Author>
+
+		<!-- The token that will be replaced when deploying the Templify package -->
+		<ReplacementToken>Templify.NancyAspNetRazor</ReplacementToken>
+
+		<!-- The "nice" name of the templify package. -->
+		<PackageName>Nancy Asp.net Razor</PackageName>
+
+		<!-- Name of the package output by Templify. Templify will generate the name
+			 based on the PackageName property above, so you may need to look at the
+			 output of the Templify target to determine the correct name here -->
+		<PackageFileName>nancy-asp.net-razor</PackageFileName>
 	</PropertyGroup>
 
-	<Target Name="Package" DependsOnTargets="Build;Copy;Templify;CleanUp"></Target>
+	<Target Name="Package" DependsOnTargets="Build;Copy;Templify;CleanUp;Install"></Target>
 
 	<Target Name="Templify" DependsOnTargets="Build">
 		<Message Text="---------------" />
@@ -20,10 +33,10 @@
 	    <PropertyGroup>
 	      <TemplifyMode>c</TemplifyMode>
 	      <TemplifyPath>"$(BuildFolder)"</TemplifyPath>
-	      <TemplifyPackageName>"Nancy Asp.net Razor"</TemplifyPackageName>
-	      <TemplifyPackageAuthor>"Brendan McMahon"</TemplifyPackageAuthor>
+	      <TemplifyPackageName>"$(PackageName)"</TemplifyPackageName>
+	      <TemplifyPackageAuthor>"$(Author)"</TemplifyPackageAuthor>
 	      <TemplifyPackageVersion>"%(assemblyInfo.Version)"</TemplifyPackageVersion>
-	      <TemplifyPackageTokens>"Templify.NancyAspNetRazor=__NAME__"</TemplifyPackageTokens>
+	      <TemplifyPackageTokens>"$(ReplacementToken)=__NAME__"</TemplifyPackageTokens>
 	      <TemplifyPackageRepositoryPath>"$(DestinationFolder)"</TemplifyPackageRepositoryPath>
 	      <TemplifyArgs>-m $(TemplifyMode) -p $(TemplifyPath) -n $(TemplifyPackageName) -a $(TemplifyPackageAuthor) -v $(TemplifyPackageVersion) -t $(TemplifyPackageTokens) -r $(TemplifyPackageRepositoryPath)</TemplifyArgs>
 	    </PropertyGroup>
@@ -49,5 +62,10 @@
 
 	<Target Name="CleanUp">
 		<RemoveDir Directories="$(BuildFolder)" />
+	</Target>
+
+	<Target Name="Install">
+		<Copy SourceFiles="$(DestinationFolder)\nancy-asp.net-razor-v%(assemblyInfo.Version).pkg" 
+			  DestinationFolder="$(HOMEDRIVE)$(HOMEPATH)\AppData\Roaming\Endjin\Templify\repo"/>
 	</Target>
 </Project>
