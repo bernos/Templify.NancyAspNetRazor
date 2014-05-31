@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="CreateReleasePackage" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Package" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<SourceFolder>$(MSBuildProjectDirectory)\Solution</SourceFolder>
+		<BuildFolder>$(MSBuildProjectDirectory)\_build</BuildFolder>
+		<DestinationFolder>$(MSBuildProjectDirectory)\Deploy</DestinationFolder>
+	</PropertyGroup>
+
+	<Target Name="Package" DependsOnTargets="Build;Copy;Templify;CleanUp"></Target>
+
 	<Target Name="Templify" DependsOnTargets="Build">
 		<Message Text="---------------" />
 	    <Message Text="TEMPLIFY" />
-	    <Message Text="VisualStudioVersion is $(VisualStudioVersion)"/>
 	    <Message Text="---------------" />
 	    
 	    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\Solution\Templify.NancyAspNetRazor.Web\obj\Release\Templify.NancyAspNetRazor.Web.dll">
@@ -12,12 +19,12 @@
 
 	    <PropertyGroup>
 	      <TemplifyMode>c</TemplifyMode>
-	      <TemplifyPath>"$(MSBuildProjectDirectory)\Solution"</TemplifyPath>
+	      <TemplifyPath>"$(BuildFolder)"</TemplifyPath>
 	      <TemplifyPackageName>"Nancy Asp.net Razor"</TemplifyPackageName>
 	      <TemplifyPackageAuthor>"Brendan McMahon"</TemplifyPackageAuthor>
 	      <TemplifyPackageVersion>"%(assemblyInfo.Version)"</TemplifyPackageVersion>
 	      <TemplifyPackageTokens>"Templify.NancyAspNetRazor=__NAME__"</TemplifyPackageTokens>
-	      <TemplifyPackageRepositoryPath>"$(MSBuildProjectDirectory)\Deploy"</TemplifyPackageRepositoryPath>
+	      <TemplifyPackageRepositoryPath>"$(DestinationFolder)"</TemplifyPackageRepositoryPath>
 	      <TemplifyArgs>-m $(TemplifyMode) -p $(TemplifyPath) -n $(TemplifyPackageName) -a $(TemplifyPackageAuthor) -v $(TemplifyPackageVersion) -t $(TemplifyPackageTokens) -r $(TemplifyPackageRepositoryPath)</TemplifyArgs>
 	    </PropertyGroup>
 	        
@@ -26,5 +33,21 @@
 
 	<Target Name="Build">
 		<MSBuild Projects="Solution\Templify.NancyAspNetRazor.sln" Properties="Configuration=Release"/>
+	</Target>
+
+	<Target Name="Copy">
+		<ItemGroup>
+			<SourceFiles Include="$(SourceFolder)\**\*.*"/>
+		</ItemGroup>
+		<Copy SourceFiles="@(SourceFiles)" DestinationFiles="@(SourceFiles->'$(BuildFolder)\%(RecursiveDir)%(Filename)%(Extension)')"/>
+
+		<Copy SourceFiles="$(MSBuildProjectDirectory)\.gitattributes;$(MSBuildProjectDirectory)\.gitignore"
+			  DestinationFolder="$(BuildFolder)"/>
+
+		<RemoveDir Directories="$(BuildFolder)\packages" />
+	</Target>
+
+	<Target Name="CleanUp">
+		<RemoveDir Directories="$(BuildFolder)" />
 	</Target>
 </Project>
