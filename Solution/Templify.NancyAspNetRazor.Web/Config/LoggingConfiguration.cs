@@ -1,5 +1,7 @@
-﻿using log4net;
+﻿using System.Collections.ObjectModel;
+using log4net;
 using log4net.Config;
+using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 using System;
 using System.Collections.Generic;
@@ -8,26 +10,31 @@ using System.Web;
 
 namespace Templify.NancyAspNetRazor.Web.Config
 {
-    public static class LoggingConfiguration
+    public class LoggingConfiguration : IRegistrations
     {
-        public static void ConfigureApplicationContainer(TinyIoCContainer container)
+        private readonly ICollection<InstanceRegistration> _instanceRegistrations;  
+        public LoggingConfiguration()
         {
             XmlConfigurator.Configure();
 
-            container.Register(typeof(ILog), (c, o) =>
+            _instanceRegistrations = new Collection<InstanceRegistration>
             {
-                return LogManager.GetLogger("root");
-            });
+                new InstanceRegistration(typeof(ILog), LogManager.GetLogger("root")),
+                new InstanceRegistration(typeof(Func<string, ILog>), (Func<string, ILog>)(LogManager.GetLogger)),
+                new InstanceRegistration(typeof(Func<Type, ILog>), (Func<Type, ILog>)(LogManager.GetLogger))
+            };
+        }
 
-            container.Register(typeof(Func<string, ILog>), (c, o) =>
-            {
-                return (Func<string, ILog>)(s => LogManager.GetLogger(s));
-            });
+        public IEnumerable<TypeRegistration> TypeRegistrations {
+            get { return null; }
+        }
+        
+        public IEnumerable<CollectionTypeRegistration> CollectionTypeRegistrations {
+            get { return null; } 
+        }
 
-            container.Register(typeof(Func<Type, ILog>), (c, o) =>
-            {
-                return (Func<Type, ILog>)(t => LogManager.GetLogger(t));
-            });
-        }            
+        public IEnumerable<InstanceRegistration> InstanceRegistrations {
+            get { return _instanceRegistrations; }
+        }
     }
 }

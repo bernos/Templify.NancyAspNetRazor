@@ -14,9 +14,10 @@ namespace Templify.NancyAspNetRazor.Web.Modules
 
             Get["/"] = parameters =>
             {
+                log.Info("Hello world");
                 var users = dbFactory().Users.ToList();
 
-                log.Info("Hello world");
+                
 
                 return View["index", users];
             };

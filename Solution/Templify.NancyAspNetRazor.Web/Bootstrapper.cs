@@ -26,7 +26,6 @@ namespace Templify.NancyAspNetRazor.Web
 
             ClientAppSettings.Enable(pipelines);
             Elmahlogging.Enable(pipelines, "elmah");
-            //CustomErrors.Enable(pipelines, new CustomErrorConfiguration());
 
             CustomErrors.Enable(pipelines);
         }
@@ -36,7 +35,7 @@ namespace Templify.NancyAspNetRazor.Web
             base.ConfigureApplicationContainer(container);
             
             JsonSerializerConfiguration.ConfigureApplicationContainer(container);
-            LoggingConfiguration.ConfigureApplicationContainer(container);
+            //LoggingConfiguration.ConfigureApplicationContainer(container);
         }
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)
