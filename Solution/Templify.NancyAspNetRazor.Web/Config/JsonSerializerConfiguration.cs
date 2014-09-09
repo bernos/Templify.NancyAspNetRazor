@@ -1,20 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Nancy;
+﻿using Nancy;
+using Nancy.Bootstrapper;
 using Nancy.Serialization.JsonNet;
-using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Templify.NancyAspNetRazor.Web.Config
 {
-    public static class JsonSerializerConfiguration
+    public class JsonSerializerConfiguration : IRegistrations
     {
-        public static void ConfigureApplicationContainer(TinyIoCContainer container)
+        private readonly ICollection<TypeRegistration> _typeRegistrations;
+ 
+        public JsonSerializerConfiguration()
         {
-            container.Register<ISerializer, CustomJsonSerializer>().AsSingleton();
+            _typeRegistrations = new Collection<TypeRegistration>
+            {
+                new TypeRegistration(typeof(ISerializer), typeof(CustomJsonSerializer), Lifetime.Singleton)
+            };    
+        }
+
+        public IEnumerable<TypeRegistration> TypeRegistrations {
+            get { return _typeRegistrations; }
+        }
+
+        public IEnumerable<CollectionTypeRegistration> CollectionTypeRegistrations
+        {
+            get { return null; } 
+        }
+
+        public IEnumerable<InstanceRegistration> InstanceRegistrations
+        {
+            get { return null; }
         }
     }
 

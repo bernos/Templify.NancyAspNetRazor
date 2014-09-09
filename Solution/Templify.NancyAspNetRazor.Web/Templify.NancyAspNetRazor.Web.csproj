@@ -185,6 +185,7 @@
     <Compile Include="Config\ErrorHandlingConfiguration.cs" />
     <Compile Include="Config\JsonSerializerConfiguration.cs" />
     <Compile Include="Config\LoggingConfiguration.cs" />
+    <Compile Include="Config\StaticContentConfiguration.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
