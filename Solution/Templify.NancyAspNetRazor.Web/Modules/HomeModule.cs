@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Nancy;
+using Nancy.Authentication.Forms;
 using Templify.NancyAspNetRazor.Data;
 using log4net;
 
@@ -17,6 +18,7 @@ namespace Templify.NancyAspNetRazor.Web.Modules
                 log.Info("Hello world");
                 var users = dbFactory().Users.ToList();
 
+                this.Login(users.First().UserId);
                 
 
                 return View["index", users];

@@ -12,6 +12,7 @@ namespace Templify.NancyAspNetRazor.Data.Configuration
         public RoleConfiguration()
         {
             HasKey(r => r.Name);
+            HasMany(r => r.Claims).WithMany();
         }
     }
 }

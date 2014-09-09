@@ -29,13 +29,24 @@ namespace Templify.NancyAspNetRazor.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            var administratorClaim = new Claim
+            {
+                Name = Claim.IsAdministrator
+            };
+
+            context.Claims.AddOrUpdate(c => c.Name, administratorClaim);
+            context.SaveChanges();
+            
             var adminRole = new Role
             {
-                Name = "Administrator"
+                Name = Role.Administrator,
+                Claims = new Collection<Claim>
+                {
+                    administratorClaim
+                }
             };
 
             context.Roles.AddOrUpdate(r => r.Name, adminRole);
-
             context.SaveChanges();
 
             context.Users.AddOrUpdate(u => u.UserName, new User

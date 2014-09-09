@@ -8,14 +8,17 @@ namespace Templify.NancyAspNetRazor.Data.Models
 {
     public class User
     {
-        public long UserId { get; set; }
+        public Guid UserId { get; set; }
         public string UserName { get; set; }
         public DateTime CreatedAt { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<Claim> Claims { get; set; } 
         public User()
         {
             CreatedAt = DateTime.UtcNow;
             Roles = new Collection<Role>();
+            Claims = new Collection<Claim>();
         }
     }
+
 }
