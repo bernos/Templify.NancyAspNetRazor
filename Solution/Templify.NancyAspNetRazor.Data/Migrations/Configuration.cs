@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Bernos.Security;
 using Templify.NancyAspNetRazor.Data.Models;
 
 namespace Templify.NancyAspNetRazor.Data.Migrations
@@ -49,11 +50,12 @@ namespace Templify.NancyAspNetRazor.Data.Migrations
             context.Roles.AddOrUpdate(r => r.Name, adminRole);
             context.SaveChanges();
 
-            context.Users.AddOrUpdate(u => u.UserName, new User
-            {
-                UserName = "admin",
-                Roles = new Collection<Role> { adminRole }
-            });
+            var hasher = new Pbkdf2Sha1PasswordHasher(new Pbkdf2Sha1Configuration());
+
+            var adminUser = new User("admin", hasher.CreateHash("admin"));
+            adminUser.Roles.Add(adminRole);
+            
+            context.Users.AddOrUpdate(u => u.UserName, adminUser);
 
             context.SaveChanges();
         }

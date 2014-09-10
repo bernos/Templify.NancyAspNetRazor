@@ -14,6 +14,7 @@ namespace Templify.NancyAspNetRazor.Data.Configuration
         {
             Property(u => u.UserId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             HasMany(u => u.Claims).WithMany();
+            HasMany(u => u.Roles);
         }
     }
 }

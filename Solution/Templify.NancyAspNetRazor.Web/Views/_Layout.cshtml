@@ -13,8 +13,14 @@
         @Html.RenderClientAppSettings()
 
     </head>
-<body>
-    @RenderBody()
-    @RenderSection("Scripts", required: false)
-</body>
+    <body>
+        
+        <div class="container">
+            <div class="row">
+                @RenderBody()    
+            </div>
+        </div>
+        
+        @RenderSection("Scripts", required: false)
+    </body>
 </html>

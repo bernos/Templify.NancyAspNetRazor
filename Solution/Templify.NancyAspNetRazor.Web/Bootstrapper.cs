@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Nancy.Authentication.Forms;
 using Nancy.Bootstrapper;
@@ -9,6 +10,7 @@ using Nancy.Elmah;
 using Nancy.Security;
 using Nancy.TinyIoc;
 using Templify.NancyAspNetRazor.Data;
+using Templify.NancyAspNetRazor.Data.Commands;
 
 namespace Templify.NancyAspNetRazor.Web
 {
@@ -33,33 +35,35 @@ namespace Templify.NancyAspNetRazor.Web
                 UserMapper = container.Resolve<IUserMapper>()
             });
         }
+
+        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
+        {
+            base.ConfigureApplicationContainer(container);
+
+            container.Register<DbContext>((c,p) => new DataContext());
+        }
     }
 
     public class UserMapper : IUserMapper
     {
-        private readonly Func<DataContext> _dbContextFactory;
+        private readonly IUserRepository _userRepository;
 
-        public UserMapper(Func<DataContext> dbContextFactory)
+        public UserMapper(IUserRepository userRepository)
         {
-            _dbContextFactory = dbContextFactory;
+            _userRepository = userRepository;
         }
 
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
-            using (var db = _dbContextFactory())
+            var user = _userRepository.GetUser(identifier);
+
+            if (user == null)
             {
-                var user = db.Users.SingleOrDefault(u => u.UserId == identifier);
-
-                if (user == null)
-                {
-                    return null;
-                }
-
-                var roleClaims = user.Roles.SelectMany(r => r.Claims).Select(c => c.Name);
-                var userClaims = user.Claims.Select(c => c.Name);
-
-                return new UserIdentity(user.UserName, roleClaims.Concat(userClaims));
+                return null;
             }
+
+            var allClaims = _userRepository.GetClaimsForUser(user.UserId);
+            return new UserIdentity(user.UserName, allClaims);
         }
     }
 

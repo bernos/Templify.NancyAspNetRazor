@@ -41,6 +41,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bernos.Security">
+      <HintPath>..\packages\Bernos.Security.1.0.0.0\lib\net40\Bernos.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
@@ -185,11 +188,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Config\CommandBusConfiguration.cs" />
     <Compile Include="Config\ErrorHandlingConfiguration.cs" />
     <Compile Include="Config\JsonSerializerConfiguration.cs" />
     <Compile Include="Config\LoggingConfiguration.cs" />
     <Compile Include="Config\StaticContentConfiguration.cs" />
+    <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
+    <Compile Include="Modules\LoginModule.cs" />
+    <Compile Include="Modules\SignupModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +206,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Error.cshtml" />
     <Content Include="Views\NotFound.cshtml" />
+    <Content Include="Views\Login\login.cshtml" />
+    <Content Include="Views\Admin\admin.cshtml" />
+    <Content Include="Views\Signup\signup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -214,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts-built\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

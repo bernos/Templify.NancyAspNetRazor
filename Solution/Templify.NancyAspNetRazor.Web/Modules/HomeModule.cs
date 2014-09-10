@@ -1,27 +1,35 @@
 using System;
+using System.Data.Entity;
 using System.Linq;
+using Bernos.Security;
 using Nancy;
 using Nancy.Authentication.Forms;
+using Nancy.ModelBinding;
 using Templify.NancyAspNetRazor.Data;
 using log4net;
+using Templify.NancyAspNetRazor.Data.Models;
 
 namespace Templify.NancyAspNetRazor.Web.Modules
 {
     public class HomeModule : NancyModule
     {
-        public HomeModule(Func<DataContext> dbFactory, Func<Type, ILog> logger)
+        public HomeModule(Func<DataContext> dbFactory, Func<Type, ILog> logger, IUserRepository userRepository, IPasswordHasher passwordHasher)
         {
             var log = logger(typeof(HomeModule));
 
             Get["/"] = parameters =>
             {
                 log.Info("Hello world");
-                var users = dbFactory().Users.ToList();
 
-                this.Login(users.First().UserId);
-                
+                using (var db = dbFactory())
+                {
+                    var users = db.Users.Include(u => u.Roles).ToList();
 
-                return View["index", users];
+                    var user = db.Users.FirstOrDefault();
+
+
+                    return View["index", users];
+                }
             };
 
             Get["/error"] = parameters =>
@@ -48,6 +56,8 @@ namespace Templify.NancyAspNetRazor.Web.Modules
                     CreatedAt = DateTime.UtcNow
                 });
             };
+
+            
         }
     }
 }
