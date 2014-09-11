@@ -1,9 +1,10 @@
 ﻿using System;
 using Bernos.Security;
+using MediatR;
 
 namespace Templify.NancyAspNetRazor.Data.Commands
 {
-    public class LoginCommand : ICommand<LoginCommandResult>
+    public class LoginCommand : IRequest<LoginCommandResult>
     {
         public string Username { get; set; }
         public string Password { get; set; }
@@ -21,7 +22,7 @@ namespace Templify.NancyAspNetRazor.Data.Commands
         }
     }
 
-    public class LoginCommandHandler : ICommandHandler<LoginCommand, LoginCommandResult>
+    public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginCommandResult>
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
@@ -32,13 +33,13 @@ namespace Templify.NancyAspNetRazor.Data.Commands
             _passwordHasher = passwordHasher;
         }
 
-        public LoginCommandResult Execute(LoginCommand command)
+        public LoginCommandResult Handle(LoginCommand message)
         {
-            var user = _userRepository.GetUser(command.Username);
+            var user = _userRepository.GetUser(message.Username);
 
             if (user != null)
             {
-                if (_passwordHasher.ValidatePassword(command.Password, user.Password))
+                if (_passwordHasher.ValidatePassword(message.Password, user.Password))
                 {
                     return new LoginCommandResult(true, user.UserId);
                 }

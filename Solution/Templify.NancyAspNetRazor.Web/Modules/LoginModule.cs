@@ -1,4 +1,5 @@
 ﻿using Bernos.Security;
+using MediatR;
 using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.ModelBinding;
@@ -9,7 +10,7 @@ namespace Templify.NancyAspNetRazor.Web.Modules
 {
     public class LoginModule : NancyModule
     {
-        public LoginModule(ICommandHandler<LoginCommand, LoginCommandResult> loginCommand)
+        public LoginModule(IMediator mediator)
         {
             Get["/login"]  = _ => View["login", new LoginCommand()];
             Get["/logout"] = _ => this.Logout("~/");
@@ -20,7 +21,7 @@ namespace Templify.NancyAspNetRazor.Web.Modules
 
                 if (model != null && !string.IsNullOrEmpty(model.Username) && !string.IsNullOrEmpty(model.Password))
                 {
-                    var result = loginCommand.Execute(model);
+                    var result = mediator.Send(model);
 
                     if (result.UserId.HasValue)
                     {

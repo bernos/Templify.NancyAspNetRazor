@@ -13,7 +13,7 @@ namespace Templify.NancyAspNetRazor.Web.Modules
 {
     public class HomeModule : NancyModule
     {
-        public HomeModule(Func<DataContext> dbFactory, Func<Type, ILog> logger, IUserRepository userRepository, IPasswordHasher passwordHasher)
+        public HomeModule(Func<Type, ILog> logger, IUserRepository userRepository, IPasswordHasher passwordHasher)
         {
             var log = logger(typeof(HomeModule));
 
@@ -21,15 +21,11 @@ namespace Templify.NancyAspNetRazor.Web.Modules
             {
                 log.Info("Hello world");
 
-                using (var db = dbFactory())
-                {
-                    var users = db.Users.Include(u => u.Roles).ToList();
-
-                    var user = db.Users.FirstOrDefault();
+               
 
 
-                    return View["index", users];
-                }
+                return View["index", null];
+               
             };
 
             Get["/error"] = parameters =>

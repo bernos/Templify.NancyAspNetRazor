@@ -41,7 +41,7 @@ namespace Templify.NancyAspNetRazor.Data.Commands
 
         public RegisterUserCommandResult Execute(RegisterUserCommand command)
         {
-            // First, assert that username does not already exist
+            // First, assert that username does not already existd
             if (_userRepository.GetUser(command.Username) != null)
             {
                 return new RegisterUserCommandResult(string.Format("Username {0} is not available", command.Username));                
