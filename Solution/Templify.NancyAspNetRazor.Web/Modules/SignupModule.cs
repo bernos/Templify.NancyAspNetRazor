@@ -1,21 +1,24 @@
-﻿using Nancy;
+﻿using MediatR;
+using Nancy;
 using Templify.NancyAspNetRazor.Data.Commands;
 
 namespace Templify.NancyAspNetRazor.Web.Modules
 {
     public class SignupModule : NancyModule
     {
-        public SignupModule(ICommandHandler<RegisterUserCommand, RegisterUserCommandResult> registerUserCommandHandler)
+        public SignupModule(IMediator mediator)
         {
             Get["/signup"] = _ =>
             {
-                var result = registerUserCommandHandler.Execute(new RegisterUserCommand
+                var command = new RegisterUserCommand
                 {
-                    Username = "tony",
-                    Password = "tony"
-                });
+                    Password = "tony",
+                    Username = "tony"
+                };
 
-                return View["signup"];
+                var result = mediator.Send(command);
+
+                return Response.AsJson(result);
             };
         }
     }

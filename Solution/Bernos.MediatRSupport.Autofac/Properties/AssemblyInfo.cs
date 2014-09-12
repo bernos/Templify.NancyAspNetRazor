@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Bernos.Auth")]
+[assembly: AssemblyTitle("Bernos.MediatRSupport.Autofac")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Bernos.Auth")]
+[assembly: AssemblyProduct("Bernos.MediatRSupport.Autofac")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c157b6fb-a9e4-481b-a17b-4bd557da1522")]
+[assembly: Guid("e16bddbd-e01f-4fc2-93e1-432f898e76da")]
 
 // Version information for an assembly consists of the following four values:
 //

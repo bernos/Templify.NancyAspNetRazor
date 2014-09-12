@@ -225,11 +225,13 @@
     <Compile Include="Config\ErrorHandlingConfiguration.cs" />
     <Compile Include="Config\JsonSerializerConfiguration.cs" />
     <Compile Include="Config\LoggingConfiguration.cs" />
+    <Compile Include="Config\MediatorConfiguration.cs" />
     <Compile Include="Config\SecurityConfiguration.cs" />
     <Compile Include="Config\StaticContentConfiguration.cs" />
     <Compile Include="Modules\AdminModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\LoginModule.cs" />
+    <Compile Include="Modules\SignupModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +252,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bernos.MediatRSupport.Autofac\Bernos.MediatRSupport.Autofac.csproj">
+      <Project>{b53ba3ad-9902-4b26-8207-46915f8eb048}</Project>
+      <Name>Bernos.MediatRSupport.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bernos.MediatRSupport\Bernos.MediatRSupport.csproj">
+      <Project>{181e36d8-7a88-472e-8770-87b0c34dab5d}</Project>
+      <Name>Bernos.MediatRSupport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Templify.NancyAspNetRazor.Data\Templify.NancyAspNetRazor.Data.csproj">
       <Project>{0b2f2115-f1b0-4221-b901-f98be55ad781}</Project>
       <Name>Templify.NancyAspNetRazor.Data</Name>

@@ -1,10 +1,11 @@
 ﻿using System;
 using Bernos.Security;
+using MediatR;
 using Templify.NancyAspNetRazor.Data.Models;
 
 namespace Templify.NancyAspNetRazor.Data.Commands
 {
-    public class RegisterUserCommand : ICommand<RegisterUserCommandResult>
+    public class RegisterUserCommand : IRequest<RegisterUserCommandResult>
     {
         public string Username { get; set; }
         public string Password { get; set; }
@@ -28,7 +29,7 @@ namespace Templify.NancyAspNetRazor.Data.Commands
         }
     }
 
-    public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterUserCommandResult>
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserCommandResult>
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
@@ -39,16 +40,17 @@ namespace Templify.NancyAspNetRazor.Data.Commands
             _passwordHasher = passwordHasher;
         }
 
-        public RegisterUserCommandResult Execute(RegisterUserCommand command)
+        public RegisterUserCommandResult Handle(RegisterUserCommand message)
         {
             // First, assert that username does not already existd
-            if (_userRepository.GetUser(command.Username) != null)
+            if (_userRepository.GetUser(message.Username) != null)
             {
-                return new RegisterUserCommandResult(string.Format("Username {0} is not available", command.Username));                
+                throw new Exception(string.Format("User {0} already exists", message.Username));
+                return new RegisterUserCommandResult(string.Format("Username {0} is not available", message.Username));                
             }
 
             // Create the user
-            var user = new User(command.Username, _passwordHasher.CreateHash(command.Password));
+            var user = new User(message.Username, _passwordHasher.CreateHash(message.Password));
             
             // TODO: switch to unit of work here
             _userRepository.AddUser(user);
