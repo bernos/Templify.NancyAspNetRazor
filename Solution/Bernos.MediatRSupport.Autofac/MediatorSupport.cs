@@ -15,25 +15,27 @@ namespace Bernos.MediatRSupport.Autofac
             var builder = new ContainerBuilder();
             var lazy = new Lazy<IServiceLocator>(() => new AutofacServiceLocator(container));
             var serviceLocatorProvider = new ServiceLocatorProvider(() => lazy.Value);
+            var key = "handler";
 
             //builder.RegisterSource(new ContravariantRegistrationSource());
             builder.RegisterAssemblyTypes(typeof(IMediator).Assembly).AsImplementedInterfaces();
             builder.RegisterInstance(serviceLocatorProvider);
 
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            if (configuration.AutoRegisterAssemblyRequestHandlerTypes)
+            {
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            builder.RegisterAssemblyTypes(assemblies).As(t => t.GetInterfaces()
-                    .Where(i => i.IsClosedTypeOf(typeof(IRequestHandler<,>)))
-                    .Select(i => new KeyedService("handler", i)));
+                builder.RegisterAssemblyTypes(assemblies).As(t => t.GetInterfaces()
+                    .Where(i => i.IsClosedTypeOf(typeof (IRequestHandler<,>)))
+                    .Select(i => new KeyedService(key, i)));
+            }
 
             if (configuration.RequestHandlerRegistrations != null)
             {
                 builder.RegisterTypes(configuration.RequestHandlerRegistrations.ToArray()).As(t => t.GetInterfaces()
                     .Where(i => i.IsClosedTypeOf(typeof(IRequestHandler<,>)))
-                    .Select(i => new KeyedService("handler", i)));
+                    .Select(i => new KeyedService(key, i)));
             }
-
-            var key = "handler";
 
             if (configuration.DecoratorRegistrations != null)
             {

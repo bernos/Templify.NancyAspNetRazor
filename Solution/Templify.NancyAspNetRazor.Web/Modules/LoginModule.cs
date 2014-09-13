@@ -19,7 +19,7 @@ namespace Templify.NancyAspNetRazor.Web.Modules
             {
                 var model = this.Bind<LoginCommand>();
 
-                if (model != null && !string.IsNullOrEmpty(model.Username) && !string.IsNullOrEmpty(model.Password))
+                if (model != null)
                 {
                     var result = mediator.Send(model);
 

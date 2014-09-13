@@ -102,3 +102,5 @@
 2014-09-12 13:27:48,000 [5] INFO  Templify.NancyAspNetRazor.Data.Commands.LoginCommandHandler Request: Templify.NancyAspNetRazor.Data.Commands.LoginCommand
 2014-09-12 13:28:54,734 [5] INFO  Templify.NancyAspNetRazor.Data.Commands.LoginCommandHandler Response: Templify.NancyAspNetRazor.Data.Commands.LoginCommandResult
 2014-09-12 13:28:54,878 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-12 13:59:06,174 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-12 14:00:14,152 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world

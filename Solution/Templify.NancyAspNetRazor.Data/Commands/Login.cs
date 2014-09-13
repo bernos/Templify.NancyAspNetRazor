@@ -1,9 +1,19 @@
 ﻿using System;
 using Bernos.Security;
+using FluentValidation;
 using MediatR;
 
 namespace Templify.NancyAspNetRazor.Data.Commands
 {
+    public class LoginCommandValidator : AbstractValidator<LoginCommand>
+    {
+        public LoginCommandValidator()
+        {
+            RuleFor(c => c.Username).NotEmpty();
+            RuleFor(c => c.Password).NotEmpty();
+        }
+    }
+
     public class LoginCommand : IRequest<LoginCommandResult>
     {
         public string Username { get; set; }
