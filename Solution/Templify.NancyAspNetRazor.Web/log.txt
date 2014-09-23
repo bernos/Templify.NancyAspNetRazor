@@ -104,3 +104,11 @@
 2014-09-12 13:28:54,878 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
 2014-09-12 13:59:06,174 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
 2014-09-12 14:00:14,152 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-22 23:40:54,140 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-22 23:42:01,919 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-22 23:42:56,520 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-22 23:44:47,716 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-22 23:46:51,457 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-22 23:48:26,393 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-22 23:52:18,306 [6] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world
+2014-09-22 23:52:33,488 [8] INFO  Templify.NancyAspNetRazor.Web.Modules.HomeModule Hello world

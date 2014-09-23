@@ -6,14 +6,14 @@ namespace Templify.NancyAspNetRazor.Data.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.0.2-21211")]
+    [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
     public sealed partial class Initial : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201409100439252_Initial"; }
+            get { return "201409221346216_Initial"; }
         }
         
         string IMigrationMetadata.Source

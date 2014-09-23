@@ -1,1 +1,3 @@
-define("Modules/Home/Models/MyModel",[],function(){var e=function(){this.name="tony"};return e}),define("Modules/Home/ViewModels/IndexViewModel",["config","jquery","../Models/MyModel"],function(e,t,n){console.log("IndexViewModel has loaded ",e),console.log(t("body"));var r=new n;console.log(r.name)}),require(["../../common"],function(e){require(["Modules/Home/ViewModels/IndexViewModel"])}),define("Modules/Home/index",function(){});
+﻿require(["../../common"], function (common) {
+    require(["Modules/Home/ViewModels/IndexViewModel"]);
+});

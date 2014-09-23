@@ -34,7 +34,7 @@ namespace Templify.NancyAspNetRazor.Web
 
             ClientAppSettings.Enable(pipelines);
             Elmahlogging.Enable(pipelines, "elmah");
-            CustomErrors.Enable(pipelines);
+            CustomErrors.Enable(pipelines, new ErrorHandlingConfiguration());
             FormsAuthentication.Enable(pipelines, new FormsAuthenticationConfiguration
             {
                 RedirectUrl = "~/login",
