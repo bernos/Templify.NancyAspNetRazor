@@ -2,7 +2,7 @@ using System;
 using log4net;
 using MediatR;
 
-namespace Templify.NancyAspNetRazor.Data.Commands.Decorators
+namespace Bernos.MediatRSupport.log4net
 {
     public class LoggingDecorator<TRequest, TResponse> : IRequestHandler<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
@@ -24,7 +24,4 @@ namespace Templify.NancyAspNetRazor.Data.Commands.Decorators
             return response;
         }
     }
-
-
-    
 }

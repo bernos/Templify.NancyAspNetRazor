@@ -13,15 +13,13 @@ namespace Bernos.MediatRSupport.Autofac
         public static void Enable(ILifetimeScope container, IMediatorConfiguration configuration)
         {
             var builder = new ContainerBuilder();
-            var lazy = new Lazy<IServiceLocator>(() => new AutofacServiceLocator(container));
-            var serviceLocatorProvider = new ServiceLocatorProvider(() => lazy.Value);
             var key = "handler";
 
-            //builder.RegisterSource(new ContravariantRegistrationSource());
+            // Register all types from MediatR library
             builder.RegisterAssemblyTypes(typeof(IMediator).Assembly).AsImplementedInterfaces();
-            builder.RegisterInstance(serviceLocatorProvider);
+            
 
-            if (configuration.AutoRegisterAssemblyRequestHandlerTypes)
+            if (configuration.AutoRegisterRequestHandlerTypes)
             {
                 var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
@@ -68,6 +66,22 @@ namespace Bernos.MediatRSupport.Autofac
                 }
             }
             
+            builder.Update(container.ComponentRegistry);
+
+            if (configuration.RegisterCommonServiceLocator)
+            {
+                RegisterCommonServiceLocator(container);    
+            }
+            
+        }
+
+        private static void RegisterCommonServiceLocator(ILifetimeScope container)
+        {
+            var builder = new ContainerBuilder();
+            var lazy = new Lazy<IServiceLocator>(() => new AutofacServiceLocator(container));
+            var serviceLocatorProvider = new ServiceLocatorProvider(() => lazy.Value);
+
+            builder.RegisterInstance(serviceLocatorProvider);
             builder.Update(container.ComponentRegistry);
         }
     }

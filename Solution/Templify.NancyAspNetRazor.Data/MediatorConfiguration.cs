@@ -1,4 +1,6 @@
 using Bernos.MediatRSupport;
+using Bernos.MediatRSupport.FluentValidation;
+using Bernos.MediatRSupport.log4net;
 using Templify.NancyAspNetRazor.Data.Commands.Decorators;
 
 namespace Templify.NancyAspNetRazor.Data

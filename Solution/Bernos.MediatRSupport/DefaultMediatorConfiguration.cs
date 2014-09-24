@@ -18,7 +18,8 @@ namespace Bernos.MediatRSupport
             _postRequestRegistrations = new Collection<Type>();
             _requestHandlerRegistrations = new Collection<Type>();
 
-            AutoRegisterAssemblyRequestHandlerTypes = true;
+            RegisterCommonServiceLocator = true;
+            AutoRegisterRequestHandlerTypes = true;
 
             Configure();
         }
@@ -48,7 +49,8 @@ namespace Bernos.MediatRSupport
             
         }
 
-        public bool AutoRegisterAssemblyRequestHandlerTypes { get; private set; }
+        public bool RegisterCommonServiceLocator { get; private set; }
+        public bool AutoRegisterRequestHandlerTypes { get; private set; }
         public IEnumerable<Type> RequestHandlerRegistrations { get { return _requestHandlerRegistrations; } }
         public IDictionary<string, Type> DecoratorRegistrations { get { return _decoratorRegistrations; } }
         public IEnumerable<Type> PreRequestRegistrations { get { return _preRequestRegistrations; } }

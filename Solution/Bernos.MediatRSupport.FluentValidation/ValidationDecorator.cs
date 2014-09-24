@@ -1,8 +1,7 @@
 using System.Linq;
-using Bernos.MediatRSupport;
 using FluentValidation;
 
-namespace Templify.NancyAspNetRazor.Data.Commands.Decorators
+namespace Bernos.MediatRSupport.FluentValidation
 {
     public class ValidationDecorator<TRequest> : IPreRequestHandler<TRequest>
     {

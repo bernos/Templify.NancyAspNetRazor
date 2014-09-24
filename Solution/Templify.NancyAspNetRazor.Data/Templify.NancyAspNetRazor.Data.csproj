@@ -87,7 +87,6 @@
   <ItemGroup>
     <Compile Include="Commands\Decorators\AuthorisationDecorator.cs" />
     <Compile Include="Commands\Decorators\LoggingDecorator.cs" />
-    <Compile Include="Commands\Decorators\ValidationDecorator.cs" />
     <Compile Include="Commands\Login.cs" />
     <Compile Include="Commands\RegisterUser.cs" />
     <Compile Include="Configuration\ClaimConfiguration.cs" />
@@ -114,6 +113,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bernos.MediatRSupport.FluentValidation\Bernos.MediatRSupport.FluentValidation.csproj">
+      <Project>{0630d37e-7746-4714-8e88-dd97a939bebd}</Project>
+      <Name>Bernos.MediatRSupport.FluentValidation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bernos.MediatRSupport\Bernos.MediatRSupport.csproj">
       <Project>{181e36d8-7a88-472e-8770-87b0c34dab5d}</Project>
       <Name>Bernos.MediatRSupport</Name>

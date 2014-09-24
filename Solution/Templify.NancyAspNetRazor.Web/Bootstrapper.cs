@@ -20,6 +20,7 @@ using Nancy.Elmah;
 using Nancy.Security;
 using Templify.NancyAspNetRazor.Data;
 using Templify.NancyAspNetRazor.Data.Commands;
+using Templify.NancyAspNetRazor.Data.Commands.Decorators;
 using Templify.NancyAspNetRazor.Web.Config;
 
 namespace Templify.NancyAspNetRazor.Web
@@ -56,14 +57,11 @@ namespace Templify.NancyAspNetRazor.Web
             builder.Register(c => new DataContext()).As<DbContext>();
             
             var container = builder.Build();
-
-            /* MEDIATR SETUP */
-            
             
             return container;
         }
     }
-    
+
     public class UserMapper : IUserMapper
     {
         private readonly IUserRepository _userRepository;
