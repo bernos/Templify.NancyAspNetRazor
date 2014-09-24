@@ -7,7 +7,9 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Extras.CommonServiceLocator;
 using Autofac.Features.Variance;
+using Bernos.MediatRSupport;
 using Bernos.MediatRSupport.Autofac;
+using Bernos.MediatRSupport.log4net;
 using Bernos.Security;
 using MediatR;
 using Microsoft.Practices.ServiceLocation;
@@ -55,12 +57,43 @@ namespace Templify.NancyAspNetRazor.Web
                 .SingleInstance();
 
             builder.Register(c => new DataContext()).As<DbContext>();
+
+    
             
             var container = builder.Build();
+            /*
             
+            var mBuilder = new ContainerBuilder();
+            var lazy = new Lazy<IServiceLocator>(() => new AutofacServiceLocator(container));
+            var serviceLocatorProvider = new ServiceLocatorProvider(() => lazy.Value);
+
+            mBuilder.RegisterSource(new ContravariantRegistrationSource());
+            mBuilder.RegisterAssemblyTypes(typeof(IMediator).Assembly).AsImplementedInterfaces();
+            mBuilder.RegisterInstance(serviceLocatorProvider);
+           
+
+            mBuilder.RegisterAssemblyTypes(typeof(LoginCommand).Assembly).As(t => t.GetInterfaces()
+                .Where(i => i.IsClosedTypeOf(typeof(IRequestHandler<,>)))
+                .Select(i => new KeyedService("handler", i)));
+
+            mBuilder.RegisterGenericDecorator(typeof (LoggingDecorator<,>), typeof (IRequestHandler<,>),
+                fromKey: "handler").Named("logger", typeof(IRequestHandler<,>));
+
+
+            mBuilder.RegisterGenericDecorator(typeof(MediatorSupport.WrapperRequestHandler<,>), typeof(IRequestHandler<,>),
+                fromKey: "logger");
+            
+            
+
+
+            mBuilder.Update(container.ComponentRegistry);
+            */
             return container;
         }
+
     }
+
+
 
     public class UserMapper : IUserMapper
     {

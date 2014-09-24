@@ -3,6 +3,7 @@ using System.Linq;
 using Autofac;
 using Autofac.Core;
 using Autofac.Extras.CommonServiceLocator;
+using Autofac.Features.Variance;
 using MediatR;
 using Microsoft.Practices.ServiceLocation;
 
@@ -10,14 +11,17 @@ namespace Bernos.MediatRSupport.Autofac
 {
     public static class MediatorSupport
     {
+        private const string HandlerKey = "handler";
         public static void Enable(ILifetimeScope container, IMediatorConfiguration configuration)
         {
             var builder = new ContainerBuilder();
-            var key = "handler";
-
-            // Register all types from MediatR library
+            builder.RegisterSource(new ContravariantRegistrationSource());
             builder.RegisterAssemblyTypes(typeof(IMediator).Assembly).AsImplementedInterfaces();
-            
+
+            if (configuration.RegisterCommonServiceLocator)
+            {
+                RegisterCommonServiceLocator(container);
+            }
 
             if (configuration.AutoRegisterRequestHandlerTypes)
             {
@@ -25,18 +29,21 @@ namespace Bernos.MediatRSupport.Autofac
 
                 builder.RegisterAssemblyTypes(assemblies).As(t => t.GetInterfaces()
                     .Where(i => i.IsClosedTypeOf(typeof (IRequestHandler<,>)))
-                    .Select(i => new KeyedService(key, i)));
+                    .Select(i => new KeyedService(HandlerKey, i)));
             }
 
             if (configuration.RequestHandlerRegistrations != null)
             {
                 builder.RegisterTypes(configuration.RequestHandlerRegistrations.ToArray()).As(t => t.GetInterfaces()
                     .Where(i => i.IsClosedTypeOf(typeof(IRequestHandler<,>)))
-                    .Select(i => new KeyedService(key, i)));
+                    .Select(i => new KeyedService(HandlerKey, i)));
             }
 
+            var key = HandlerKey;
+            
             if (configuration.DecoratorRegistrations != null)
             {
+
                 foreach (var decoratorRegistration in configuration.DecoratorRegistrations)
                 {
                     builder.RegisterGenericDecorator(decoratorRegistration.Value, typeof(IRequestHandler<,>),
@@ -46,33 +53,10 @@ namespace Bernos.MediatRSupport.Autofac
                 }
             }
 
-            // Register pipeline
-            builder.RegisterGenericDecorator(typeof(MediatorPipelineDecorator<,>), typeof(IRequestHandler<,>),
+            builder.RegisterGenericDecorator(typeof(WrapperRequestHandler<,>), typeof(IRequestHandler<,>),
                 fromKey: key);
-
-            if (configuration.PreRequestRegistrations != null)
-            {
-                foreach (var preRequestRegistration in configuration.PreRequestRegistrations)
-                {
-                    builder.RegisterGeneric(preRequestRegistration).As(typeof (IPreRequestHandler<>));
-                }
-            }
-
-            if (configuration.PostRequestRegistrations != null)
-            {
-                foreach (var postRequestRegistration in configuration.PostRequestRegistrations)
-                {
-                    builder.RegisterGeneric(postRequestRegistration).As(typeof (IPostRequestHandler<,>));
-                }
-            }
-            
+           
             builder.Update(container.ComponentRegistry);
-
-            if (configuration.RegisterCommonServiceLocator)
-            {
-                RegisterCommonServiceLocator(container);    
-            }
-            
         }
 
         private static void RegisterCommonServiceLocator(ILifetimeScope container)
@@ -84,5 +68,21 @@ namespace Bernos.MediatRSupport.Autofac
             builder.RegisterInstance(serviceLocatorProvider);
             builder.Update(container.ComponentRegistry);
         }
+
+        public class WrapperRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
+            where TRequest : IRequest<TResponse>
+        {
+            private readonly IRequestHandler<TRequest, TResponse> _innerHandler;
+
+            public WrapperRequestHandler(IRequestHandler<TRequest, TResponse> innerHandler)
+            {
+                _innerHandler = innerHandler;
+            }
+
+            public TResponse Handle(TRequest message)
+            {
+                return _innerHandler.Handle(message);
+            }
+        } 
     }
 }

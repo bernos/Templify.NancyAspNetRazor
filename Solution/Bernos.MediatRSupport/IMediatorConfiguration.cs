@@ -26,7 +26,5 @@ namespace Bernos.MediatRSupport
         /// Request handler decorator types to register
         /// </summary>
         IDictionary<string, Type> DecoratorRegistrations { get; }
-        IEnumerable<Type> PreRequestRegistrations { get; }
-        IEnumerable<Type> PostRequestRegistrations { get; }
     }
 }

@@ -1,20 +1,24 @@
+using System;
 using System.Linq;
 using FluentValidation;
+using MediatR;
 
 namespace Bernos.MediatRSupport.FluentValidation
 {
-    public class ValidationDecorator<TRequest> : IPreRequestHandler<TRequest>
+    public class ValidationDecorator<TRequest, TResponse> : IRequestHandler<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
+        private readonly IRequestHandler<TRequest, TResponse> _innerHander;
         private readonly IValidator<TRequest>[] _validators;
 
-        public ValidationDecorator(IValidator<TRequest>[] validators)
+        public ValidationDecorator(IRequestHandler<TRequest, TResponse> innerHandler, IValidator<TRequest>[] validators)
         {
             _validators = validators;
+            _innerHander = innerHandler;
         }
 
-        public void Handle(TRequest request)
+        public TResponse Handle(TRequest message)
         {
-            var context = new ValidationContext(request);
+            var context = new ValidationContext(message);
 
             var failures =
                 _validators.Select(v => v.Validate(context)).SelectMany(r => r.Errors).Where(f => f != null).ToList();
@@ -23,6 +27,9 @@ namespace Bernos.MediatRSupport.FluentValidation
             {
                 throw new ValidationException(failures);
             }
+
+            return _innerHander.Handle(message);
         }
+
     }
 }
