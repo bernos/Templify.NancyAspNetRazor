@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using Autofac.Extras.CommonServiceLocator;
@@ -22,7 +23,7 @@ namespace Bernos.MediatRSupport.Autofac
             _container = container;
             _builder = new ContainerBuilder();
         }
-
+        
         public IMediatorBuilder AddRequestDecorator(string name, Type decoratorType)
         {
             if (_isBuilt)
@@ -34,6 +35,15 @@ namespace Bernos.MediatRSupport.Autofac
                 fromKey: _key).Named(name, typeof(IRequestHandler<,>));
 
             _key = name;
+
+            return this;
+        }
+
+        public IMediatorBuilder AddRequestHandlerAssemblies(params Assembly[] assemblies)
+        {
+            _builder.RegisterAssemblyTypes(assemblies).As(t => t.GetInterfaces()
+                .Where(i => i.IsClosedTypeOf(typeof(IRequestHandler<,>)))
+                .Select(i => new KeyedService(HandlerKey, i)));
 
             return this;
         }
@@ -52,15 +62,8 @@ namespace Bernos.MediatRSupport.Autofac
             var serviceLocatorProvider = new ServiceLocatorProvider(() => lazy.Value);
 
             _builder.RegisterInstance(serviceLocatorProvider);
-
-
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            _builder.RegisterAssemblyTypes(assemblies).As(t => t.GetInterfaces()
-                .Where(i => TypeExtensions.IsClosedTypeOf((Type) i, typeof(IRequestHandler<,>)))
-                .Select(i => new KeyedService(HandlerKey, i)));
-
-            _builder.RegisterGenericDecorator(typeof(MediatorSupport.WrapperRequestHandler<,>), typeof(IRequestHandler<,>),
+            
+            _builder.RegisterGenericDecorator(typeof(WrapperRequestHandler<,>), typeof(IRequestHandler<,>),
                 fromKey: _key);
 
             _builder.Update(_container.ComponentRegistry);
@@ -70,4 +73,20 @@ namespace Bernos.MediatRSupport.Autofac
             return serviceLocatorProvider().GetInstance<IMediator>();
         }
     }
+
+    internal class WrapperRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
+    {
+        private readonly IRequestHandler<TRequest, TResponse> _innerHandler;
+
+        public WrapperRequestHandler(IRequestHandler<TRequest, TResponse> innerHandler)
+        {
+            _innerHandler = innerHandler;
+        }
+
+        public TResponse Handle(TRequest message)
+        {
+            return _innerHandler.Handle(message);
+        }
+    } 
 }
