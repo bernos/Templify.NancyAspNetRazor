@@ -11,7 +11,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace Bernos.MediatRSupport.Autofac
 {
-    public class MediatorBuilder : IMediatorBuilder
+    public class AutofacMediatorBuilder : IMediatorBuilder
     {
         private const string HandlerKey = "handler";
         private const string AsyncHandlerKey = "async-handler";
@@ -20,7 +20,7 @@ namespace Bernos.MediatRSupport.Autofac
         private string _key;
         private string _asyncKey;
         private bool _isBuilt;
-        public MediatorBuilder(ILifetimeScope container)
+        public AutofacMediatorBuilder(ILifetimeScope container)
         {
             _key = HandlerKey;
             _asyncKey = AsyncHandlerKey;
@@ -42,12 +42,18 @@ namespace Bernos.MediatRSupport.Autofac
 
                 _asyncKey = name;
             }
-            else
+            else if (
+                decoratorType.GetInterfaces()
+                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof (IRequestHandler<,>)))
             {
-                _builder.RegisterGenericDecorator(decoratorType, typeof(IRequestHandler<,>),
-                fromKey: _key).Named(name, typeof(IRequestHandler<,>));
+                _builder.RegisterGenericDecorator(decoratorType, typeof (IRequestHandler<,>),
+                    fromKey: _key).Named(name, typeof (IRequestHandler<,>));
 
                 _key = name;
+            }
+            else
+            {
+                throw new ArgumentException("Decorator type must implement IRequestHandler<TRequest,TResponse> or IAsyncRequestHandler<TRequest, TResponse>", "decoratorType");
             }
 
             return this;
