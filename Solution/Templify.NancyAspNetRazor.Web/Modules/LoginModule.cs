@@ -15,13 +15,13 @@ namespace Templify.NancyAspNetRazor.Web.Modules
             Get["/login"]  = _ => View["login", new LoginCommand()];
             Get["/logout"] = _ => this.Logout("~/");
 
-            Post["/login"] = _ =>
+            Post["/login", runAsync: true] = async (_, t) =>
             {
-                var model = this.Bind<LoginCommand>();
+                var model = this.Bind<LoginCommandAsync>();
 
                 if (model != null)
                 {
-                    var result = mediator.Send(model);
+                    var result = await mediator.SendAsync(model);
 
                     if (result.UserId.HasValue)
                     {

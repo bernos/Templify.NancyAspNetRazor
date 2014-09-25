@@ -49,7 +49,7 @@ namespace Templify.NancyAspNetRazor.Web
             var builder = new ContainerBuilder();
 
             builder.RegisterAssemblyTypes(typeof(DataContext).Assembly, typeof(Bootstrapper).Assembly, typeof(Pbkdf2Sha1Configuration).Assembly)
-                .Where(t => t != typeof(DataContext) && !t.GetInterfaces().Any(it => it.IsGenericType && it.GetGenericTypeDefinition() == typeof(IRequestHandler<,>)))
+                .Where(t => t != typeof(DataContext) && !t.GetInterfaces().Any(it => it.IsGenericType && (it.GetGenericTypeDefinition() == typeof(IRequestHandler<,>) || it.GetGenericTypeDefinition() == typeof(IAsyncRequestHandler<,>))))
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
@@ -62,6 +62,7 @@ namespace Templify.NancyAspNetRazor.Web
             var mediatorBuilder = new MediatorBuilder(container);
             mediatorBuilder.AddRequestHandlerAssemblies(AppDomain.CurrentDomain.GetAssemblies());
             mediatorBuilder.AddRequestDecorator("logger", typeof (LoggingDecorator<,>));
+            mediatorBuilder.AddRequestDecorator("async-logger", typeof (AsyncLoggingDecorator<,>));
             mediatorBuilder.AddRequestDecorator("validator", typeof (ValidationDecorator<,>));
             mediatorBuilder.Build();
 
