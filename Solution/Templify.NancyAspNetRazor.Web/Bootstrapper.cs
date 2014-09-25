@@ -9,6 +9,7 @@ using Autofac.Extras.CommonServiceLocator;
 using Autofac.Features.Variance;
 using Bernos.MediatRSupport;
 using Bernos.MediatRSupport.Autofac;
+using Bernos.MediatRSupport.FluentValidation;
 using Bernos.MediatRSupport.log4net;
 using Bernos.Security;
 using MediatR;
@@ -21,8 +22,6 @@ using Nancy.CustomErrors;
 using Nancy.Elmah;
 using Nancy.Security;
 using Templify.NancyAspNetRazor.Data;
-using Templify.NancyAspNetRazor.Data.Commands;
-using Templify.NancyAspNetRazor.Data.Commands.Decorators;
 using Templify.NancyAspNetRazor.Web.Config;
 
 namespace Templify.NancyAspNetRazor.Web
@@ -43,8 +42,6 @@ namespace Templify.NancyAspNetRazor.Web
                 RedirectUrl = "~/login",
                 UserMapper = container.Resolve<IUserMapper>()
             });
-
-            MediatorSupport.Enable(container, new MediatorConfiguration());
         }
 
         protected override ILifetimeScope GetApplicationContainer()
@@ -61,6 +58,13 @@ namespace Templify.NancyAspNetRazor.Web
     
             
             var container = builder.Build();
+
+            var mediatorBuilder = new MediatorBuilder(container);
+            mediatorBuilder.AddRequestDecorator("logger", typeof (LoggingDecorator<,>));
+            mediatorBuilder.AddRequestDecorator("validator", typeof (ValidationDecorator<,>));
+            mediatorBuilder.Build();
+
+
             /*
             
             var mBuilder = new ContainerBuilder();

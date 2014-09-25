@@ -85,7 +85,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Decorators\AuthorisationDecorator.cs" />
     <Compile Include="Commands\Login.cs" />
     <Compile Include="Commands\RegisterUser.cs" />
     <Compile Include="Configuration\ClaimConfiguration.cs" />

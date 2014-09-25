@@ -56,12 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsyncMediatorPipelineDecorator.cs" />
     <Compile Include="DefaultMediatorConfiguration.cs" />
+    <Compile Include="IMediatorBuilder.cs" />
     <Compile Include="IMediatorConfiguration.cs" />
-    <Compile Include="IPostRequestHandler.cs" />
-    <Compile Include="IPreRequestHandler.cs" />
-    <Compile Include="MediatorPipelineDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
