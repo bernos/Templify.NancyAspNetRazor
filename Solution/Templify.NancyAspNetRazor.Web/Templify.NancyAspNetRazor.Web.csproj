@@ -74,6 +74,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MediatR.0.5.0.0\lib\portable-net40+sl50+win+wp80+MonoAndroid10+MonoTouch10\MediatR.dll</HintPath>
     </Reference>
+    <Reference Include="MediatR.Extensions">
+      <HintPath>..\packages\MediatR.Extensions.0.0.1.0\lib\net45\MediatR.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="MediatR.Extensions.Autofac">
+      <HintPath>..\packages\MediatR.Extensions.Autofac.0.0.1.0\lib\net45\MediatR.Extensions.Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -279,10 +285,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bernos.MediatRSupport.Autofac\Bernos.MediatRSupport.Autofac.csproj">
-      <Project>{b53ba3ad-9902-4b26-8207-46915f8eb048}</Project>
-      <Name>Bernos.MediatRSupport.Autofac</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bernos.MediatRSupport.FluentValidation\Bernos.MediatRSupport.FluentValidation.csproj">
       <Project>{0630d37e-7746-4714-8e88-dd97a939bebd}</Project>
       <Name>Bernos.MediatRSupport.FluentValidation</Name>
@@ -290,10 +292,6 @@
     <ProjectReference Include="..\Bernos.MediatRSupport.log4net\Bernos.MediatRSupport.log4net.csproj">
       <Project>{f5cfd46b-d49b-4bfa-8891-fc3e31fbe5f7}</Project>
       <Name>Bernos.MediatRSupport.log4net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bernos.MediatRSupport\Bernos.MediatRSupport.csproj">
-      <Project>{181e36d8-7a88-472e-8770-87b0c34dab5d}</Project>
-      <Name>Bernos.MediatRSupport</Name>
     </ProjectReference>
     <ProjectReference Include="..\Templify.NancyAspNetRazor.Data\Templify.NancyAspNetRazor.Data.csproj">
       <Project>{0b2f2115-f1b0-4221-b901-f98be55ad781}</Project>

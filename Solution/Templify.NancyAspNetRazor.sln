@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templify.NancyAspNetRazor.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Templify.NancyAspNetRazor.Data", "Templify.NancyAspNetRazor.Data\Templify.NancyAspNetRazor.Data.csproj", "{0B2F2115-F1B0-4221-B901-F98BE55AD781}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bernos.MediatRSupport", "Bernos.MediatRSupport\Bernos.MediatRSupport.csproj", "{181E36D8-7A88-472E-8770-87B0C34DAB5D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bernos.MediatRSupport.Autofac", "Bernos.MediatRSupport.Autofac\Bernos.MediatRSupport.Autofac.csproj", "{B53BA3AD-9902-4B26-8207-46915F8EB048}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bernos.MediatRSupport.FluentValidation", "Bernos.MediatRSupport.FluentValidation\Bernos.MediatRSupport.FluentValidation.csproj", "{0630D37E-7746-4714-8E88-DD97A939BEBD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bernos.MediatRSupport.log4net", "Bernos.MediatRSupport.log4net\Bernos.MediatRSupport.log4net.csproj", "{F5CFD46B-D49B-4BFA-8891-FC3E31FBE5F7}"
@@ -29,14 +25,6 @@ Global
 		{0B2F2115-F1B0-4221-B901-F98BE55AD781}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B2F2115-F1B0-4221-B901-F98BE55AD781}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B2F2115-F1B0-4221-B901-F98BE55AD781}.Release|Any CPU.Build.0 = Release|Any CPU
-		{181E36D8-7A88-472E-8770-87B0C34DAB5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{181E36D8-7A88-472E-8770-87B0C34DAB5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{181E36D8-7A88-472E-8770-87B0C34DAB5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{181E36D8-7A88-472E-8770-87B0C34DAB5D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B53BA3AD-9902-4B26-8207-46915F8EB048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B53BA3AD-9902-4B26-8207-46915F8EB048}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B53BA3AD-9902-4B26-8207-46915F8EB048}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B53BA3AD-9902-4B26-8207-46915F8EB048}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0630D37E-7746-4714-8E88-DD97A939BEBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0630D37E-7746-4714-8E88-DD97A939BEBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0630D37E-7746-4714-8E88-DD97A939BEBD}.Release|Any CPU.ActiveCfg = Release|Any CPU

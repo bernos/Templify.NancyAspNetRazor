@@ -118,10 +118,6 @@
       <Project>{f5cfd46b-d49b-4bfa-8891-fc3e31fbe5f7}</Project>
       <Name>Bernos.MediatRSupport.log4net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bernos.MediatRSupport\Bernos.MediatRSupport.csproj">
-      <Project>{181e36d8-7a88-472e-8770-87b0c34dab5d}</Project>
-      <Name>Bernos.MediatRSupport</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201409221346216_Initial.resx">
