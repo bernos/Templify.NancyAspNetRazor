@@ -59,12 +59,12 @@ namespace Templify.NancyAspNetRazor.Web
             
             var container = builder.Build();
 
-            var mediatorBuilder = new MediatorBuilder(container);
-            mediatorBuilder.AddRequestHandlerAssemblies(AppDomain.CurrentDomain.GetAssemblies());
-            mediatorBuilder.AddRequestDecorator("logger", typeof (LoggingDecorator<,>));
-            mediatorBuilder.AddRequestDecorator("async-logger", typeof (AsyncLoggingDecorator<,>));
-            mediatorBuilder.AddRequestDecorator("validator", typeof (ValidationDecorator<,>));
-            mediatorBuilder.Build();
+            var mediator = new AutofacMediatorBuilder(container)
+                .WithRequestHandlerAssemblies(AppDomain.CurrentDomain.GetAssemblies())
+                .WithRequestDecorator("logger", typeof (LoggingDecorator<,>))
+                .WithRequestDecorator("async-logger", typeof (AsyncLoggingDecorator<,>))
+                .WithRequestDecorator("validator", typeof (ValidationDecorator<,>))
+                .Build();
 
 
             /*

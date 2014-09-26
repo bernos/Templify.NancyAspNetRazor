@@ -11,7 +11,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace Bernos.MediatRSupport.Autofac
 {
-    public class AutofacMediatorBuilder : IMediatorBuilder
+    public class AutofacMediatorBuilder : MediatorBuilder
     {
         private const string HandlerKey = "handler";
         private const string AsyncHandlerKey = "async-handler";
@@ -19,7 +19,6 @@ namespace Bernos.MediatRSupport.Autofac
         private readonly ContainerBuilder _builder;
         private string _key;
         private string _asyncKey;
-        private bool _isBuilt;
         public AutofacMediatorBuilder(ILifetimeScope container)
         {
             _key = HandlerKey;
@@ -27,7 +26,59 @@ namespace Bernos.MediatRSupport.Autofac
             _container = container;
             _builder = new ContainerBuilder();
         }
-        
+
+        protected override void RegisterRequestDecorator(string name, Type decoratorType)
+        {
+            _builder.RegisterGenericDecorator(decoratorType, typeof(IRequestHandler<,>),
+                    fromKey: _key).Named(name, typeof(IRequestHandler<,>));
+
+            _key = name;
+        }
+
+        protected override void RegisterAsyncRequestDecorator(string name, Type decoratorType)
+        {
+            _builder.RegisterGenericDecorator(decoratorType, typeof(IAsyncRequestHandler<,>),
+                fromKey: _asyncKey).Named(name, typeof(IAsyncRequestHandler<,>));
+
+            _asyncKey = name;
+        }
+
+        protected override void RegisterRequestHandlersFromAssembly(Assembly assembly)
+        {
+            _builder.RegisterAssemblyTypes(assembly).As(t => t.GetInterfaces()
+                .Where(i => i.IsClosedTypeOf(typeof(IRequestHandler<,>)))
+                .Select(i => new KeyedService(HandlerKey, i)));
+        }
+
+        protected override void RegisterAsyncRequestHandlersFromAssembly(Assembly assembly)
+        {
+            _builder.RegisterAssemblyTypes(assembly).As(t => t.GetInterfaces()
+                .Where(i => i.IsClosedTypeOf(typeof(IAsyncRequestHandler<,>)))
+                .Select(i => new KeyedService(AsyncHandlerKey, i)));
+        }
+
+        protected override IMediator BuildMediator()
+        {
+            _builder.RegisterSource(new ContravariantRegistrationSource());
+            _builder.RegisterAssemblyTypes(typeof(IMediator).Assembly).AsImplementedInterfaces();
+
+            var lazy = new Lazy<IServiceLocator>(() => new AutofacServiceLocator(_container));
+            var serviceLocatorProvider = new ServiceLocatorProvider(() => lazy.Value);
+
+            _builder.RegisterInstance(serviceLocatorProvider);
+
+            _builder.RegisterGenericDecorator(typeof(WrapperRequestHandler<,>), typeof(IRequestHandler<,>),
+                fromKey: _key);
+
+            _builder.RegisterGenericDecorator(typeof(AsyncWrapperRequestHandler<,>), typeof(IAsyncRequestHandler<,>),
+                fromKey: _asyncKey);
+
+            _builder.Update(_container.ComponentRegistry);
+            
+            return serviceLocatorProvider().GetInstance<IMediator>();
+        }
+
+        /*
         public IMediatorBuilder AddRequestDecorator(string name, Type decoratorType)
         {
             if (_isBuilt)
@@ -57,8 +108,9 @@ namespace Bernos.MediatRSupport.Autofac
             }
 
             return this;
-        }
+        }*/
 
+        /*
         public IMediatorBuilder AddRequestHandlerAssemblies(params Assembly[] assemblies)
         {
             _builder.RegisterAssemblyTypes(assemblies).As(t => t.GetInterfaces()
@@ -70,8 +122,9 @@ namespace Bernos.MediatRSupport.Autofac
                 .Select(i => new KeyedService(AsyncHandlerKey, i)));
 
             return this;
-        }
+        }*/
 
+        /*
         public IMediator Build()
         {
             if (_isBuilt)
@@ -98,7 +151,7 @@ namespace Bernos.MediatRSupport.Autofac
             _isBuilt = true;
 
             return serviceLocatorProvider().GetInstance<IMediator>();
-        }
+        }*/
     }
 
     internal class WrapperRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>

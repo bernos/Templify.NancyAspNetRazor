@@ -91,7 +91,6 @@
     <Compile Include="Configuration\RoleConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />
     <Compile Include="DataContext.cs" />
-    <Compile Include="MediatorConfiguration.cs" />
     <Compile Include="Migrations\201409221346216_Initial.cs" />
     <Compile Include="Migrations\201409221346216_Initial.Designer.cs">
       <DependentUpon>201409221346216_Initial.cs</DependentUpon>
