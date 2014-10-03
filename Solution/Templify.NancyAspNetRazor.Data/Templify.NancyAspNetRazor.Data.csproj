@@ -34,6 +34,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bernos.DDD.Data">
+      <HintPath>..\packages\Bernos.DDD.Data.0.0.3.0\lib\net45\Bernos.DDD.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Bernos.DDD.Data.EntityFramework">
+      <HintPath>..\packages\Bernos.DDD.Data.EntityFramework.0.0.3.0\lib\net45\Bernos.DDD.Data.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Bernos.Security">
       <HintPath>..\packages\Bernos.Security.1.0.0.0\lib\net40\Bernos.Security.dll</HintPath>
     </Reference>
@@ -102,22 +108,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bernos.MediatRSupport.FluentValidation\Bernos.MediatRSupport.FluentValidation.csproj">
-      <Project>{0630d37e-7746-4714-8e88-dd97a939bebd}</Project>
-      <Name>Bernos.MediatRSupport.FluentValidation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bernos.MediatRSupport.log4net\Bernos.MediatRSupport.log4net.csproj">
-      <Project>{f5cfd46b-d49b-4bfa-8891-fc3e31fbe5f7}</Project>
-      <Name>Bernos.MediatRSupport.log4net</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201409221346216_Initial.resx">

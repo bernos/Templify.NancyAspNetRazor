@@ -1,4 +1,5 @@
 ﻿using System;
+using Bernos.DDD.Data;
 using Bernos.Security;
 using MediatR;
 using Templify.NancyAspNetRazor.Data.Models;
@@ -31,17 +32,21 @@ namespace Templify.NancyAspNetRazor.Data.Commands
 
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserCommandResult>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly Func<Bernos.DDD.Data.IUnitOfWork> _unitOfWorkFactory;
         private readonly IPasswordHasher _passwordHasher;
 
-        public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher)
+        public RegisterUserCommandHandler(Func<Bernos.DDD.Data.IUnitOfWork> unitOfWorkFactory, IPasswordHasher passwordHasher)
         {
-            _userRepository = userRepository;
+            _unitOfWorkFactory = unitOfWorkFactory;
             _passwordHasher = passwordHasher;
         }
-
+        
         public RegisterUserCommandResult Handle(RegisterUserCommand message)
         {
+
+            throw new NotImplementedException();
+
+            /*
             // First, assert that username does not already existd
             if (_userRepository.GetUser(message.Username) != null)
             {
@@ -56,7 +61,7 @@ namespace Templify.NancyAspNetRazor.Data.Commands
             _userRepository.AddUser(user);
             _userRepository.Save();
 
-            return new RegisterUserCommandResult(user.UserId);
+            return new RegisterUserCommandResult(user.UserId);*/
         }
     }
 }

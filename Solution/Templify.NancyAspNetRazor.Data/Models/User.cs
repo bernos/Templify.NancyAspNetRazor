@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+using Bernos.DDD.Data;
 
 namespace Templify.NancyAspNetRazor.Data.Models
 {
-    public class User
+    public class User : IAggregate
     {
         public Guid UserId { get; private set; }
         public string UserName { get; set; }
