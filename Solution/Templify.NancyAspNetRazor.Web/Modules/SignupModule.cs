@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Nancy;
-using Templify.NancyAspNetRazor.Data.Commands;
+using Templify.NancyAspNetRazor.Data.Auth.Commands;
 
 namespace Templify.NancyAspNetRazor.Web.Modules
 {

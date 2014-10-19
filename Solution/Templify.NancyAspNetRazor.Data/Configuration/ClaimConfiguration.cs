@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using Templify.NancyAspNetRazor.Data.Models;
+using Templify.NancyAspNetRazor.Data.Auth.Models;
 
 namespace Templify.NancyAspNetRazor.Data.Configuration
 {

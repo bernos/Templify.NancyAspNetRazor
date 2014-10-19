@@ -86,17 +86,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MediatR.0.5.0.0\lib\portable-net40+sl50+win+wp80+MonoAndroid10+MonoTouch10\MediatR.dll</HintPath>
     </Reference>
-    <Reference Include="MediatR.Extensions">
-      <HintPath>..\packages\MediatR.Extensions.0.0.1.0\lib\net45\MediatR.Extensions.dll</HintPath>
+    <Reference Include="MediatR.Extensions, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MediatR.Extensions.0.0.4.0\lib\net45\MediatR.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="MediatR.Extensions.Autofac">
-      <HintPath>..\packages\MediatR.Extensions.Autofac.0.0.1.0\lib\net45\MediatR.Extensions.Autofac.dll</HintPath>
+    <Reference Include="MediatR.Extensions.Autofac, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MediatR.Extensions.Autofac.0.0.4.0\lib\net45\MediatR.Extensions.Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="MediatR.Extensions.FluentValidation">
-      <HintPath>..\packages\MediatR.Extensions.FluentValidation.0.0.1.0\lib\net45\MediatR.Extensions.FluentValidation.dll</HintPath>
+    <Reference Include="MediatR.Extensions.FluentValidation, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MediatR.Extensions.FluentValidation.0.0.4.0\lib\net45\MediatR.Extensions.FluentValidation.dll</HintPath>
     </Reference>
-    <Reference Include="MediatR.Extensions.log4net">
-      <HintPath>..\packages\MediatR.Extensions.log4net.0.0.1.0\lib\net45\MediatR.Extensions.log4net.dll</HintPath>
+    <Reference Include="MediatR.Extensions.log4net, Version=0.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MediatR.Extensions.log4net.0.0.4.0\lib\net45\MediatR.Extensions.log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">

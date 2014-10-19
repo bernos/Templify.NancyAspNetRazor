@@ -7,7 +7,7 @@ using Nancy.Authentication.Forms;
 using Nancy.ModelBinding;
 using Templify.NancyAspNetRazor.Data;
 using log4net;
-using Templify.NancyAspNetRazor.Data.Models;
+using Templify.NancyAspNetRazor.Data.Auth.Repositories;
 
 namespace Templify.NancyAspNetRazor.Web.Modules
 {

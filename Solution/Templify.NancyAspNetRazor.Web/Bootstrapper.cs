@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Templify.NancyAspNetRazor.Data;
+using Templify.NancyAspNetRazor.Data.Auth.Repositories;
 using Templify.NancyAspNetRazor.Web.Config;
 
 namespace Templify.NancyAspNetRazor.Web
@@ -64,9 +65,8 @@ namespace Templify.NancyAspNetRazor.Web
 
             var mediator = new AutofacMediatorBuilder(container)
                 .WithRequestHandlerAssemblies(AppDomain.CurrentDomain.GetAssemblies())
-                .WithRequestDecorator("logger",         typeof (LoggingRequestHandler<,>))
-                .WithRequestDecorator("async-logger",   typeof (AsyncLoggingRequestHandler<,>))
-                .WithRequestDecorator("validator",      typeof (ValidationRequestHandler<,>))
+                .UseLog4Net()
+                .UseFluentValidation()
                 .Build();
             
             return container;

@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using Bernos.Security;
-using Templify.NancyAspNetRazor.Data.Models;
+using Templify.NancyAspNetRazor.Data.Auth.Models;
 
 namespace Templify.NancyAspNetRazor.Data.Migrations
 {

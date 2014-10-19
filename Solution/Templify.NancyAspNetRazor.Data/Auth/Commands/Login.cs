@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Bernos.DDD.Data;
 using Bernos.Security;
 using FluentValidation;
 using MediatR;
 
-namespace Templify.NancyAspNetRazor.Data.Commands
+namespace Templify.NancyAspNetRazor.Data.Auth.Commands
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
@@ -15,23 +13,8 @@ namespace Templify.NancyAspNetRazor.Data.Commands
             RuleFor(c => c.Password).NotEmpty();
         }
     }
-
-    public class LoginCommandValidatorAsync : AbstractValidator<LoginCommandAsync>
-    {
-        public LoginCommandValidatorAsync()
-        {
-            RuleFor(c => c.Username).NotEmpty();
-            RuleFor(c => c.Password).NotEmpty();
-        }
-    }
-
+    
     public class LoginCommand : IRequest<LoginCommandResult>
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class LoginCommandAsync : IAsyncRequest<LoginCommandResult>
     {
         public string Username { get; set; }
         public string Password { get; set; }
@@ -77,40 +60,6 @@ namespace Templify.NancyAspNetRazor.Data.Commands
 
                 return new LoginCommandResult(false, null);
             }
-        }
-    }
-
-    public class LoginCommandHandlerAsync : IAsyncRequestHandler<LoginCommandAsync, LoginCommandResult>
-    {
-        private readonly Func<IUnitOfWork> _unitOfWorkFactory;
-        private readonly IPasswordHasher _passwordHasher;
-
-        public LoginCommandHandlerAsync(Func<IUnitOfWork> unitOfWorkFactory, IPasswordHasher passwordHasher)
-        {
-            _unitOfWorkFactory = unitOfWorkFactory;
-            _passwordHasher = passwordHasher;
-        }
-
-        public async Task<LoginCommandResult> Handle(LoginCommandAsync message)
-        {
-            return await Task.Run(() =>
-            {
-                using (var unitOfWork = _unitOfWorkFactory())
-                {
-                    var respository = unitOfWork.UserRepository;
-                    var user = respository.GetUser(message.Username);
-
-                    if (user != null)
-                    {
-                        if (_passwordHasher.ValidatePassword(message.Password, user.Password))
-                        {
-                            return new LoginCommandResult(true, user.UserId);
-                        }
-                    }
-
-                    return new LoginCommandResult(false, null);
-                }
-            });
         }
     }
 }

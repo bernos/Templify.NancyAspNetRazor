@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using Templify.NancyAspNetRazor.Data.Models;
+using Templify.NancyAspNetRazor.Data.Auth.Models;
 
 namespace Templify.NancyAspNetRazor.Data
 {

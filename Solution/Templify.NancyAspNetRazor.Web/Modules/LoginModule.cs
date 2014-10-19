@@ -4,7 +4,7 @@ using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.ModelBinding;
 using Templify.NancyAspNetRazor.Data;
-using Templify.NancyAspNetRazor.Data.Commands;
+using Templify.NancyAspNetRazor.Data.Auth.Commands;
 
 namespace Templify.NancyAspNetRazor.Web.Modules
 {
@@ -15,13 +15,13 @@ namespace Templify.NancyAspNetRazor.Web.Modules
             Get["/login"]  = _ => View["login", new LoginCommand()];
             Get["/logout"] = _ => this.Logout("~/");
 
-            Post["/login", runAsync: true] = async (_, t) =>
+            Post["/login"] = _ =>
             {
-                var model = this.Bind<LoginCommandAsync>();
+                var model = this.Bind<LoginCommand>();
 
                 if (model != null)
                 {
-                    var result = await mediator.SendAsync(model);
+                    var result = mediator.Send(model);
 
                     if (result.UserId.HasValue)
                     {

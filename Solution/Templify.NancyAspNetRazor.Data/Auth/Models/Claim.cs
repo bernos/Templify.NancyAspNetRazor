@@ -1,4 +1,4 @@
-﻿namespace Templify.NancyAspNetRazor.Data.Models
+namespace Templify.NancyAspNetRazor.Data.Auth.Models
 {
     public class Claim
     {

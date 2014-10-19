@@ -1,12 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Bernos.DDD.Data;
 using Bernos.DDD.Data.EntityFramework;
-using Templify.NancyAspNetRazor.Data.Models;
+using Templify.NancyAspNetRazor.Data.Auth.Models;
 
-namespace Templify.NancyAspNetRazor.Data
+namespace Templify.NancyAspNetRazor.Data.Auth.Repositories
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
